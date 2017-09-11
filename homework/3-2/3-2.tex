@@ -51,11 +51,11 @@
   Let $W$ be the adjacency matrix, the single-source shortest-path problem is to calculate $V_i = W ^ {(\infty)} \cdot W_i$, where $W_i$ denotes the $i$-th column of $W$. The index of source is $i$, and the $j$-th element of $V_i$ is the weight of the shortest path from $i$ to $j$. The product of two matrices $C = A \cdot B$ here is defined as
   $$ C_{ij} = \min_{1 \leq k \leq n} \{ A_{ik} + B_{kj} \} $$ \par
   Since a shortest path contains at most $|V|-1$ edges, we only have to find $W$ raised to the power of $|V|-1$. We may calculate that from right to left. Each multiplication takes $|V|^2$ time, and we performs such multiplication $|V|-1$ times, therefore the total running time is $|V|^3$.
-  
+
   \section{[TC] Problem 25.1-6}
   \begin{codebox}
     \Procname{$\proc{Build-Predecessor-Matrix}(W, L, n)$}
-    \li Let $\Pi$ be a new $n \times n$ matrix initialized with \NIL
+    \li let $\Pi$ be a new $n \times n$ matrix initialized with \NIL
     \li \For $i \gets 1$ to $n$
     \li \Do  \For $j \gets 1$ to $n$
     \li      \Do  \For $k \gets 1$ to $n$
@@ -67,7 +67,7 @@
         \End
     \li \Return $\Pi$
   \end{codebox}
-  
+
   \section{[TC] Problem 25.1-9}
   \begin{codebox}
     \Procname{$\proc{Faster-All-Pairs-Shortest-Paths-Modified}(W, n)$}
@@ -83,16 +83,16 @@
         \End
     \li \Return $L^{(m)}$
   \end{codebox}
-  
+
   \section{[TC] Problem 25.1-9}
   \begin{codebox}
     \Procname{$\proc{Minimun-Length-Negative-Cycle}(W, n)$}
     \li $L^{(1)} \gets W$
-    \li \For $m \gets 2$ to $n-1$
+    \li \For $m \gets 2$ to $n$
     \li \Do  let $L^{(m)}$ be a new $n \times n$ matrix
     \li      $L^{(m)} \gets \proc{Extend-Shortest-Paths}(L^{(m-1)}, W)$
     \li      \For $i \gets 1$ to $n$
-    \li      \Do  \If $L^{(m)}_{ii} < 0$ 
+    \li      \Do  \If $L^{(m)}_{ii} < 0$
     \li           \Do \Return $m$
                   \End
              \End
@@ -100,8 +100,54 @@
     \li \Return $-1$ \Comment does not contain negative cycle
   \end{codebox}
   The total running time is $O(|V|^2 \cdot ans)$ if the graph contains a negative cycle, or $O(|V|^3)$ if not.
-  
-  \section{[TC] Problem 25.1-9}
+
+  \section{[TC] Problem 25.2-2}
   Let $W$ be the adjacency matrix, where $W_{ij} = 1$ if there exists a directed edge from $i$ to $j$, or $0$ if not. The method of computing transitive closure is the same as `multiplying matrices' technique described in Section 25.1, except the definition of `multiplication' of matrices $A$ and $B$ should be changed to
   $$ C_{ij} = \bigvee_{k = 1}^n (A_{ik} \wedge B_{kj}) .$$
+
+  \section{[TC] Problem 25.2-4}
+  The only difference between these two implementations of Floyd-Warshall algorithm is that, when updating $d_{ij}$, which version of $d_{ik}$ and $d_{kj}$ is used. Note that, during an iteration of outermost loop, for all index $i$, $d_{ik}$ and $d_{ki}$ are not changed, because $d_{kk} = 0$ and thus $\min(d_{ik}, d_{ik} + d{kk}) = d_{ik}$ and $\min(d_{ki}, d_{kk} + d{ki}) = d_{ki}$. Therefore, the version of $d_{ik}$ and $d_{kj}$ used for updating $d_{ij}$ does not matter, and the implementation remains correct.
+
+  \section{[TC] Problem 25.2-6}
+  Let $d$ be the matrix produced by Floyd-Warshall algorithm.If vertex $i$ lies in some negative-weight cycle, then $d_{ii}$ must be negative. So we only have to inspect the diagonal of $d$. If negative number exists in the diagonal, then the graph must contains a negative cycle.
+  
+  \section{[TC] Problem 25.2-6}
+   \begin{codebox}
+    \Procname{$\proc{Transitive-Closure}(G)$}
+    \li let $T$ be a new $|V(G)| \times |V(G)|$ matrix filled with 0
+    \li let $Vis[1 \twodots |V(G)|]$ be a new boolean array
+    \li \For $i \gets 1$ to $|V(G)|$
+    \li \Do  \For $j \gets 1$ to $|V(G)|$
+    \li      \Do  $V[j] \gets \FALSE$
+             \End
+    \li      $\proc{DFS}(T, Vis, G, i, i)$
+        \End
+    \li \Return $T$
+  \end{codebox}
+  \begin{codebox}
+    \Procname{$\proc{DFS}(T, Vis, G, x, p)$}
+    \li \If $Vis[x]$
+    \li \Do \Return
+        \End
+    \li $Vis[x] \gets \TRUE$
+    \li $T_{px} \gets 1$
+    \li \For each vertex $v$ in $\attrib{G}{Adj}[x]$
+    \li \Do  $\proc{DFS}(v, p)$
+        \End
+  \end{codebox}
+  The procedure described above performs depth-first search from each vertex. Every round of search takes $O(|V|+|E|) = O(|E|)$ time, and it is performed $|V|$ times, so the total running time is $O(|V||E|)$.
+
+  \section{[TC] Problem 25.3-2}
+  The purpose of adding $s$ to $V$, is to determining the  function $h : V \rightarrow \mathbb{R}$, such that after the reweighting described in Lemma 25.1, all edges are non-negative, therefore Dijkstra's algorithm applies. If define $h(v) = \delta(s, v)$, the triangle inequality guarantees the non-negativity of the edges in the new graph.
+
+  \section{[TC] Problem 25.3-3}
+  If all edge all non-negative in the original graph $G$, consider the vertex $v$ added to the original graph, since the $v$ is connected to every vertex in $G$ by an edge weighted 0, it is obvious that $\delta(v, u) = 0$ for all $u$ in $V(G)$, i.e. $h(u) = 0$. Therefore, $w = \hat{w}$.
+
+  \section{[TC] Problem 25-2}
+  \begin{enumerate}
+  	\item By referring to Problem 6-2, the asymptotic running times for \proc{Insert}, \proc{Extract-Min}, \proc{Decrease-Key} are $O(\log_d n)$, $O(d \log_d n)$, $O(\log_d n )$, respectively. If we choose $d = \Theta(n^{\alpha})$, their running times are $O(1/\alpha)$, $O(n^{\alpha}/\alpha)$, $O(1/\alpha)$, respectively. Since the running times for those of a Fibonacci heap are $O(1)$, $O(\log n)$, $O(1)$, respectively, the running times for \proc{Insert} and \proc{Decrease-Key} of a $d$-ary heap are equal to those of a Fibonacci heap, while $d$-ary heap is slower in \proc{Extract-Min}.
+    \item Since the graph does not contain negative-weight edge, Dijkstra's algorithm applies here. If we use $V^{\alpha}$-ary heap and run Dijkstra's algorithm, the total running time will be $O(V / \alpha + V \cdot V^{\alpha}/\alpha + V^{1 + \epsilon}/\alpha)$. If we take $\alpha = \epsilon$, i.e. $d = V^{\epsilon}$, since $\epsilon$ is a constant, the total running time is $O(V^{1+\epsilon}) = O(E)$.
+    \item For each vertex in the graph, we take it as the source and run Dijkstra's algorithm described above. The total running time is $O(VE)$.
+    \item We can perform Johnson's algorithm on the graph, and use the above version of Dijkstra's algorithm in Johnson's algorithm. The total running time is $O(VE + VE) = O(VE)$.
+  \end{enumerate}
 \end{document}
