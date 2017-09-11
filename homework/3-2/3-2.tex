@@ -1,0 +1,107 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.2}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\newcommand{\NIL}{\const{nil}}
+\newcommand{\FALSE}{\const{false}}
+\newcommand{\TRUE}{\const{true}}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[TC] Problem 25.1-4}
+  The matrix `multiplication' defined by \proc{Extend-Shortest-Paths} reads
+  \begin{align*}
+    C &= A \cdot B \\
+    C_{ij} &= \min_{1 \leq k \leq n} \{ A_{ik} + B_{kj} \}
+  \end{align*}\par
+  To prove the associativity of such `multiplication', we only have to verify that $(A \cdot B) \cdot C = A \cdot (B \cdot C)$. Let $D$ denote lhs, $D'$ denote rhs:
+  \begin{align*}
+    D_{ij} &= \min_{1 \leq l \leq n} \{ \min_{1 \leq k \leq n} \{ A_{ik} + B_{kl} \} + C_{lj} \} \\
+    &= \min_{1 \leq l \leq n} \{ \min_{1 \leq k \leq n} \{ A_{ik} + B_{kl} + C_{lj} \} \} \\
+    &= \min_{1 \leq k \leq n} \{ \min_{1 \leq l \leq n} \{ A_{ik} + B_{kl} + C_{lj} \} \} \\
+    &= \min_{1 \leq k \leq n} \{ A_{ik} + \min_{1 \leq l \leq n} \{B_{kl}  + C_{lj} \} \} = D'_{ij}
+  \end{align*}
+  this completes the proof of associativity.
+
+  \section{[TC] Problem 25.1-5}
+  Let $W$ be the adjacency matrix, the single-source shortest-path problem is to calculate $V_i = W ^ {(\infty)} \cdot W_i$, where $W_i$ denotes the $i$-th column of $W$. The index of source is $i$, and the $j$-th element of $V_i$ is the weight of the shortest path from $i$ to $j$. The product of two matrices $C = A \cdot B$ here is defined as
+  $$ C_{ij} = \min_{1 \leq k \leq n} \{ A_{ik} + B_{kj} \} $$ \par
+  Since a shortest path contains at most $|V|-1$ edges, we only have to find $W$ raised to the power of $|V|-1$. We may calculate that from right to left. Each multiplication takes $|V|^2$ time, and we performs such multiplication $|V|-1$ times, therefore the total running time is $|V|^3$.
+  
+  \section{[TC] Problem 25.1-6}
+  \begin{codebox}
+    \Procname{$\proc{Build-Predecessor-Matrix}(W, L, n)$}
+    \li Let $\Pi$ be a new $n \times n$ matrix initialized with \NIL
+    \li \For $i \gets 1$ to $n$
+    \li \Do  \For $j \gets 1$ to $n$
+    \li      \Do  \For $k \gets 1$ to $n$
+    \li           \Do  \If $L_{ij}+ W_{jk} \isequal L_{ik}$ and $i \neq k$
+    \li                \Do $\Pi_{ik} = j$
+                       \End
+                  \End
+             \End
+        \End
+    \li \Return $\Pi$
+  \end{codebox}
+  
+  \section{[TC] Problem 25.1-9}
+  \begin{codebox}
+    \Procname{$\proc{Faster-All-Pairs-Shortest-Paths-Modified}(W, n)$}
+    \li $L^{(1)} \gets W$
+    \li $m \gets 1$
+    \li \While $m < 2(n-1)$
+    \li \Do let $L^{(2m)}$ be a new $n \times n$ matrix
+    \li     $L^{(2m)} \gets  \proc{Extend-Shortest-Paths}(L^{(m)}, L^{(m)})$
+    \li     $m \gets 2m$
+        \End
+    \li \If $L^{(m)} \neq L^{(m/2)}$
+    \li \Do \Error contains negative cycle
+        \End
+    \li \Return $L^{(m)}$
+  \end{codebox}
+  
+  \section{[TC] Problem 25.1-9}
+  \begin{codebox}
+    \Procname{$\proc{Minimun-Length-Negative-Cycle}(W, n)$}
+    \li $L^{(1)} \gets W$
+    \li \For $m \gets 2$ to $n-1$
+    \li \Do  let $L^{(m)}$ be a new $n \times n$ matrix
+    \li      $L^{(m)} \gets \proc{Extend-Shortest-Paths}(L^{(m-1)}, W)$
+    \li      \For $i \gets 1$ to $n$
+    \li      \Do  \If $L^{(m)}_{ii} < 0$ 
+    \li           \Do \Return $m$
+                  \End
+             \End
+        \End
+    \li \Return $-1$ \Comment does not contain negative cycle
+  \end{codebox}
+  The total running time is $O(|V|^2 \cdot ans)$ if the graph contains a negative cycle, or $O(|V|^3)$ if not.
+  
+  \section{[TC] Problem 25.1-9}
+  Let $W$ be the adjacency matrix, where $W_{ij} = 1$ if there exists a directed edge from $i$ to $j$, or $0$ if not. The method of computing transitive closure is the same as `multiplying matrices' technique described in Section 25.1, except the definition of `multiplication' of matrices $A$ and $B$ should be changed to
+  $$ C_{ij} = \bigvee_{k = 1}^n (A_{ik} \wedge B_{kj}) .$$
+\end{document}
