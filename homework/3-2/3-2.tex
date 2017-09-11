@@ -67,6 +67,7 @@
         \End
     \li \Return $\Pi$
   \end{codebox}
+  Remark: we can prove that, providing only the completed matrix $L$ is not sufficient to compute the predecessor matrix $\Pi$. Consider such set of vertex-labeled graph $S_n (n \geq 3)$ that contains all directed $n$-cycle whose edge weights are zero. Formally speaking, $S_n = \{G_{\pi}\}$ where $\pi$ is a permutation of $\{1, 2, \cdots n\}$, and $V(G_{\pi}) = \{1, 2, \cdots, n\}$, $E(G_{\pi}) = \{(1, \pi(1)), (2, \pi(2)), \cdots , (n, \pi(n))\}$, and $w(i, j) = 0$ if $(i, j) \in E$. For every $G \in S_n$, $G$ is strongly connected and thus the matrix $L_n$ produced by all-pair shortest-paths algorithm is $0_{n \times n}$. Suppose, to the contrary that it can compute a predecessor matrix $\Pi$ of $L_n$, and let $\Pi_{ij} = k$ be any non-nil element of $\Pi$, then $(k, j)$ is in one of the shortest-paths trees, and of course it must be in the original graph. However, if we take a permutation $\pi_0$ that $\pi_0(j) = k$ and construct a graph $G_{\pi_0}$, then $\pi_0(k) \neq j$ and thus $(k, j) \notin E(G_{\pi_0})$, which means the algorithm gives wrong answer.
 
   \section{[TC] Problem 25.1-9}
   \begin{codebox}
@@ -84,7 +85,7 @@
     \li \Return $L^{(m)}$
   \end{codebox}
 
-  \section{[TC] Problem 25.1-9}
+  \section{[TC] Problem 25.1-10}
   \begin{codebox}
     \Procname{$\proc{Minimun-Length-Negative-Cycle}(W, n)$}
     \li $L^{(1)} \gets W$
@@ -110,7 +111,7 @@
 
   \section{[TC] Problem 25.2-6}
   Let $d$ be the matrix produced by Floyd-Warshall algorithm.If vertex $i$ lies in some negative-weight cycle, then $d_{ii}$ must be negative. So we only have to inspect the diagonal of $d$. If negative number exists in the diagonal, then the graph must contains a negative cycle.
-  
+
   \section{[TC] Problem 25.2-6}
    \begin{codebox}
     \Procname{$\proc{Transitive-Closure}(G)$}
