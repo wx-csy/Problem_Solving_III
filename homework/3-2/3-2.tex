@@ -67,20 +67,22 @@
         \End
     \li \Return $\Pi$
   \end{codebox}
-  Remark: we can prove that, providing only the completed matrix $L$ is not sufficient to compute the predecessor matrix $\Pi$. Consider such set of vertex-labeled graph $S_n (n \geq 3)$ that contains all directed $n$-cycle whose edge weights are zero. Formally speaking, $S_n = \{G_{\pi}\}$ where $\pi$ is a permutation of $\{1, 2, \cdots n\}$, and $V(G_{\pi}) = \{1, 2, \cdots, n\}$, $E(G_{\pi}) = \{(1, \pi(1)), (2, \pi(2)), \cdots , (n, \pi(n))\}$, and $w(i, j) = 0$ if $(i, j) \in E$. For every $G \in S_n$, $G$ is strongly connected and thus the matrix $L_n$ produced by all-pair shortest-paths algorithm is $0_{n \times n}$. Suppose, to the contrary that it can compute a predecessor matrix $\Pi$ of $L_n$, and let $\Pi_{ij} = k$ be any non-nil element of $\Pi$, then $(k, j)$ is in one of the shortest-paths trees, and of course it must be in the original graph. However, if we take a permutation $\pi_0$ that $\pi_0(j) = k$ and construct a graph $G_{\pi_0}$, then $\pi_0(k) \neq j$ and thus $(k, j) \notin E(G_{\pi_0})$, which means the algorithm gives wrong answer.
+  Remark: we can prove that, providing only the completed matrix $L$ is not sufficient to compute the predecessor matrix $\Pi$. Consider such two graphs $G_1$ and $G_2$, both containing $n$ vertices($n \geq 3$) labeled from $1$. $G_1$ contains directed edges $(1, 2)$, $(2, 3)$, $\cdots$, $(n-1, n)$ and $(n, 1)$, while $G_2$ contains $(n, n-1)$, $\cdots$, $(2, 1)$ and $(1, n)$. All edges in both graphs weigh $0$. It is obvious that for both $G_1$ and $G_2$, $L = 0_{n \times n}$.  Suppose, to the contrary, that there exits such algorithm that can compute predecessor matrix $\Pi$ for any valid matrix $L$ produced by all-pair shortest-paths algorithm. If we choose $0_{n \times n}$ as the input of such algorithm, and its output matrix is $\Pi$. Let $\Pi_{ij} = k$ be any non-nil element in $\Pi$, then $(k, j)$ must be in the original graph. Note that $E(G_1) \cap E(G_2) = \varnothing$, which means at least one of $G_1$ and $G_2$ will make such algorithm produce wrong answer.
 
   \section{[TC] Problem 25.1-9}
   \begin{codebox}
     \Procname{$\proc{Faster-All-Pairs-Shortest-Paths-Modified}(W, n)$}
     \li $L^{(1)} \gets W$
     \li $m \gets 1$
-    \li \While $m < 2(n-1)$
+    \li \While $m < n$
     \li \Do let $L^{(2m)}$ be a new $n \times n$ matrix
     \li     $L^{(2m)} \gets  \proc{Extend-Shortest-Paths}(L^{(m)}, L^{(m)})$
     \li     $m \gets 2m$
         \End
-    \li \If $L^{(m)} \neq L^{(m/2)}$
-    \li \Do \Error contains negative cycle
+    \li \For $i \gets 1$ to $n$
+    \li \Do \If $L^{(m)}_{ii} < 0$
+    \li     \Do \Error contains negative cycle
+            \End
         \End
     \li \Return $L^{(m)}$
   \end{codebox}
@@ -133,7 +135,7 @@
     \li $Vis[x] \gets \TRUE$
     \li $T_{px} \gets 1$
     \li \For each vertex $v$ in $\attrib{G}{Adj}[x]$
-    \li \Do  $\proc{DFS}(v, p)$
+    \li \Do  $\proc{DFS}(T, vis, G, v, p)$
         \End
   \end{codebox}
   The procedure described above performs depth-first search from each vertex. Every round of search takes $O(|V|+|E|) = O(|E|)$ time, and it is performed $|V|$ times, so the total running time is $O(|V||E|)$.
