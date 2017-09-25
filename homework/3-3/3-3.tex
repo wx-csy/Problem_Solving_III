@@ -89,7 +89,7 @@
   \section{[GC] Problem 5.10}
   Note that a graph of size at least 2 contains at least 3 vertices, so Theorem 5.7 applies. \par
   Sufficiency: let $u, v$ be any two distinct vertices in $G$. Since $G$ is connectd, there exists a $u-v$ path, say $(u, w_1, w_2, \cdots, w_n, v)$. Since edges $uw_1, w_1w_2$, edges $w_1w_2, w_2w_3$, $\cdots$, edges $w_{n-1}w_n, w_nv$ lie on common cycles respectively, by Theorem 5.8 $uw_1, w_nv$ lie on  common cycle, and thus $u, v$ lie on same cycle. By Theorem 5.7 $G$ is nonseparable. \par
-  Necessity: let $uv$, $vw$ be any two adjacent edges in nonseperable graph $G$. By Theorem 5.7, $u, w$ lie on common cycle $C$. If $v \in C$, then $uv, vw$ lie on common cycle $C$; otherwise, let $P$ be either $u-w$ path in cycle $C$, then $P \cup \{uv, vw\}$ forms a cycle where $uv, vw$ lie on.
+  Necessity: let $uv$, $vw$ be any two adjacent edges in nonseperable graph $G$. By Theorem 5.7, $u, w$ lie on common cycle $C$. If $v \in C$, then $uv, vw$ lie on common cycle $C$; otherwise, let $P$ be either $u-w$ path in cycle $C$, then $P \cup \{uv, vw\}$ forms a cycle on which $uv, vw$ lie.
 
   \section{[GC] Problem 5.11}
   By Theorem 5.3, we only have to show that, for every three distinct vertices $u, v, w \in G$, there exists a $u-w$ path that does not contain $v$. \par
