@@ -1,0 +1,80 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.4}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\newcommand{\id}{\mathop{\mathrm{id}}}
+\newcommand{\od}{\mathop{\mathrm{od}}}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[GC] Problem 7.1}
+  \begin{enumerate}
+  	\item For every ordered pair of vertices $u, v$ in $D$, let $w$ be any vertex of $D$ other than $u, v$, then $D-w$ is strong and there exists a path from $u$ to $v$. Hence $D$ is strong.
+  	\item Let $\{a, b, c, d\}$ be the vertex set of $D$. Consider $D-d$ whose order is 3, since it is oriented and strong, it must be a directed triangle. Without loss of generality, assume that the arcs are $ab, bc, ca$. Likewise $D-c$ is also a directed triangle. Since $ab$ has already been an arc of $D-c$, its arcs are $ab, bd, da$. Now consider $D-b$ containing arcs $ca, da$. Note that it is impossible to make $D-b$ both strong and oriented by adding arcs. Therefore there does not exist such graph satisfying the property described in the problem.
+  \end{enumerate}
+  	
+  \section{[GC] Problem 7.2}
+  \begin{itemize}
+    \item If: since $G$ is Eulerian, it must have an Eulerian cycle $(u_1, u_2, \cdots, u_n, u0)$. Let the directions of the edges be $(u_1, u_2)$, $(u_2, u_3)$, $\cdots$, $(u_{n-1}, u_n)$, $(u_n, u_0)$. For every vertex $v$ of $G$, it may appear more than once in Eulerian cycle, but for each apperance $u_i$ of $v$, $(u_{i-1}, u_i)$ and $(u_i, u_{i+1})$ provide one indegree and one outdegree for $v$. Therefore, $\id{v} = \od{v}$ for every vertex $v$ of the orientation. Hence $G$ has an Eulerian orientation. 
+    \item Only if: if $G$ has an Eulerian orientation, then for every vertex $v$ of $G$, $\id{v} = \od{v}$. The underlying graph of the orientation, i.e. $G$, satisfies that $\deg{v}$ is odd for every $v$ because $\deg{v} = \id{v} + \od{v}$ where $\id{v} = \od{v}$. Therefore $G$ is Eulerian.
+  \end{itemize}  
+  
+  \section{[GC] Problem 7.4}
+  \begin{itemize}
+  	\item If: for every ordered pair of vertices $u, v$, there exists a $v-u$ path in $\vec{D}$ because $\vec{D}$ is strong. By the definition of the converse of a graph, the $v-u$ path in $\vec{D}$ is simultaneously a $u-v$ path in $D$. Hence $D$ is strong.
+  	\item Only if: note that the converse of the converse of a graph of is the graph itself. Interchanging $D$ with $\vec{D}$ in the proof of `if' gives the proof of `only if'.
+  \end{itemize}
+  
+  \section{[GC] Problem 7.5}
+  \begin{itemize}
+  	\item If: Let's prove by contradiction. If $D$ is not strong, then it must contain at least two strongly connected components. Let $C_1$ be one of the components, and $C_2 = D - C_1$ contains all other strongly conneted components. The edges connecting $C_1$ and $C_2$ in $G$ form an edge cut of $G$, and thus there exists an arc from $C_1$ to $C_2$ and an arc from $C_2$ to $C_1$. This means that $C_1$ and $C_2$ are  strongly connected, which leads to contradiction.
+  	\item Only if: Let $u$ and $v$ be any vertex of $A$ and $B$, respectively. Since $D$ is strong, there must exists a directed path from $u$ to $v$. Futhermore, there must exist an arc $(x, y)$, such that $x \in A$ and $y \in B$. Likewise there must exist an arc $(z, w)$ such that $z \in B$ and $w \in A$. Therefore, there is an arc from $A$ to $B$ and an arc from $B$ to $A$.
+  \end{itemize}
+  
+   \section{[GC] Problem 7.9}
+   \begin{itemize}
+   	 \item If: for a tournament $T$ of order $n$, it contains $n(n-1)/2$ arcs, and thus the sum of outdegrees over all verices of $T$ is $n(n-1)/2$. Since every two vertices of $T$ have distinct outdegrees, it must be the case that, for every integer $i$ $(0 \leq i \leq n)$, there exists exactly one vertex $v_i$ such that $\od{v_i} = i$. Futhermore, there exist arcs from $v_n$ to all other vertices, arcs from $v_{n-1}$ to all other vertices except $v_n$, $\cdots$. In other words, $(v_i, v_j)$ is an arc of $T$ if and only if $i < j$. Since the relation `$<$' is transitive, the tournament $T$ is also transitive.
+	\item Only if: By Theorem 7.8, there exists a Hamiltonian path $P=(u_1, u_2, \cdots u_n)$ of $T$. By transitivity, $(u_i, u_j)$ is an arc of $T$ if and only if $i < j$. Therefore, $\od{u_i} = n-i$, i.e. every two vertices of $T$ have distinct outdegrees. 
+   \end{itemize}
+   
+   \section{[GC] Problem 7.10}
+   Let $(u = u_0, u_1, \cdots, u_k = v)$ be a shortest path from $u$ to $v$. $(u, u_2)$, $(u, u_3)$, $\cdots$m $(u, u_k)$ are not arcs of the tournament, for any one of them will make the shortest path even shorter. Therefore, $(u_2, u)$, $(u_3, u)$, $\cdots$, $(u_k, u)$ are arcs of the tournament, which means that $\id{u} \geq k-1$.
+   
+   \section{[GC] Problem 7.13}
+   Since $u$ and $v$ are vertices of a tournament, either arc $(u, v)$ or arc $(v, u)$ is in the tournament. Without loss of generality, assume $(u, v)$ is in the tournament, then $\vec{d}(u, v) = 1$. However, $(v, u)$ is not in the tournament, which makes $\vec{d}(v, u) > 1$. Therefore, $\vec{d}(u, v) \neq \vec{d}(v, u)$.
+   
+   \section{[GC] Problem 7.14}
+   \begin{enumerate}
+   	\item  We try to construct a tournament $T$ of order $n$ ($n$ is odd) such that every vertex of $T$ has the same indegree (or outdegree). Let $v_1, v_2, \cdots, v_n$ be vertices of $K_n$. We assign directions for edges of $K_n$ according to the following rule: for every pair of vertices $v_i, v_j$ ($i < j$), $(v_i, v_j)$ is an arc of $T$ if $i$ and $j$ have the same parity, and $(v_j, v_i)$ is an arc of $T$ if the parities of $i$ and $j$ differ. For every vertex $v_i$, $\id v_i = \lfloor (i-1)/2 \rfloor + \lceil (n-i)/2 \rfloor = (n-1)/2$, which means that all teams tie for first place.
+   	\item Suppose, to the contrary, that all teams tie for first place. Let $T$ denote the corresponding tournament of even order $n$. If all vertice of $T$ has equal indegree $d$ and outdegree $n-1-d$, then the sum of the indegrees and outdegrees over all vertices are $nd$ and $n(n-1-d)$, respectively. Since $d$ and $n-1-d$ have different parities, $nd \neq n(n-1-d)$, which violates Theorem 7.1. So it is impossible for all teams to tie for the first place.
+   \end{enumerate}
+   
+   \section{[GC] Problem 7.15}
+   We first prove by mathematical induction, that for every integer $k$ with $3 \leq k \leq n$, a strong tournament $T$ of order $n$ has a strong tournament subgraph $T_k$ of order $k$. \par
+   For the base step, $T = T_n$ it self is a strong tournament subgraph of $T$. \par 
+   For the induction step, assume that $T_n$ contains a tournament subgraph $T_k$ of order $k$ $(4 \leq k \leq n)$. By Theorem 7.11, there exists vertex $v$ of $T_k$, such that $T_{k-1} = T_k - v$ is a strong tournament subgraph of $T_n$. \par 
+   By mathematical induction, $T$ has a strong tournament subgraph $T_k$ of order $k$ for all $k$ with $3 \leq k \leq n$. Since $T_k$ is Hamiltonian by Theorem 7.10, $T$ contains a cycle of length $k$, i.e. the Hamiltonian cycle of $T_k$, for every integer $k$ with $3 \leq k \leq n$. 
+\end{document}
