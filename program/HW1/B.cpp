@@ -1,87 +1,80 @@
-#include <cstdio>
 #include <iostream>
 #include <algorithm>
-#include <cmath>
+#include <utility>
+#include <cstdio>
+#include <queue>
 using namespace std;
 
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define Rep(i, n) for (int i = 1; i <= (n); i++)
 #define range(x) (x).begin(), (x).end()
-#define pb push_back
-#define mt make_tuple
-typedef long long LL;
 
-int s, p;
-
-const int MAXV = 100005;
-const int MAXE = 300005;
-
-int n, m;
+const int INF = 0x7f7f7f7f;
+const int MAXV = 1005;
+const int MAXE = 500005;
 struct edge{
-    int u, v;
-    double w;
-    bool operator < (const edge& e) const {
-        return w < e.w;
+    int u, v, w;
+};
+
+struct graph{
+    int V;
+    vector<edge> adj[MAXV];
+    int d[MAXV];
+    edge* p[MAXV];
+
+    void add_edge(int u, int v, int w){
+        edge e;
+        e.u = u; e.v = v; e.w = w;
+        adj[u].push_back(e);
     }
-} edges[MAXE];
 
-#define p pppp
-int p[MAXV];
-void init(int num){
-    for (int i=1; i<=num; i++) p[i] = i;
-}
+    bool done[MAXV];
+    void dijkstra(int src){
+        typedef pair<int,int> pii;
+        priority_queue<pii, vector<pii>, greater<pii> > q;
 
-int parent(int x){
-    if (p[x] == x) return x;
-    return p[x] = parent(p[x]);
-}
-
-bool unite(int u, int v){
-    u = parent(u); v = parent(v);
-    p[u] = v; return u != v;
-}
-#undef p
-
-void kruskal(){
-    init(n);
-    sort(edges, edges + m);
-    int curn = 1;
-    for (int i = 0; curn < n; i++){
-        if (unite(edges[i].u, edges[i].v)){
-            // choose the i-th edge
-            if (curn == p - s){
-                printf("%.2f\n", edges[i].w);
-                return;
+        fill(d, d + V + 1, INF);
+        d[src] = 0;
+        fill(done, done + V + 1, false);
+        q.push(make_pair(0, src));
+        while (!q.empty()){
+            int u = q.top().second; q.pop();
+            if (done[u]) continue;
+            done[u] = true;
+            rep (i, adj[u].size()){
+                edge e = adj[u][i];
+                if (d[e.v] > d[u] + e.w){
+                    d[e.v] = d[u] + e.w;
+                    p[e.v] = &adj[u][i];
+                    q.push(make_pair(d[e.v], e.v));
+                }
             }
-            curn++;
-
         }
     }
-}
+};
 
-typedef pair<double, double> pt;
-pt pts[505];
-
+int t, s, d;
 int main(){
-    ios::sync_with_stdio(false);    cin.tie(0);
-    int N; cin >> N;
-    while (N--){
-        cin >> s >> p;
-        for (int i=1; i<=p; i++){
-            cin >> pts[i].first >> pts[i].second;
+    while (~scanf("%d%d%d", &t, &s, &d)){
+        graph g;
+        g.V = 1001;
+        int a, b, wt;
+        while (t--){
+            scanf("%d%d%d", &a, &b, &wt);
+            g.add_edge(a, b, wt);
+            g.add_edge(b, a, wt);
         }
-        n = p;
-        m = 0;
-        for (int i=1; i<=p; i++){
-            for (int j=1; j<=p; j++){
-                edges[m].u = i;
-                edges[m].v = j;
-                edges[m].w = hypot(pts[i].first - pts[j].first,
-                                   pts[i].second - pts[j].second);
-                m++;
-            }
+        rep (i, s){
+            scanf("%d", &a);
+            g.add_edge(1001, a, 0);
         }
-        kruskal();
+        g.dijkstra(1001);
+        int ans = INT_MAX;
+        rep (i, d){
+            scanf("%d", &a);
+            ans = min(ans, g.d[a]);
+        }
+        printf("%d\n", ans);
     }
     return 0;
 }

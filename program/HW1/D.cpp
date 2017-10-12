@@ -1,85 +1,64 @@
 #include <iostream>
-#include <cstdio>
 #include <algorithm>
+#include <utility>
+#include <cstdio>
+#include <queue>
+#include <set>
 #include <cmath>
-#include <cfloat>
-#include <numeric>
+#include <climits>
 using namespace std;
 
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define Rep(i, n) for (int i = 1; i <= (n); i++)
 #define range(x) (x).begin(), (x).end()
-#define pb push_back
-#define mt make_tuple
-#define read(n) scanf("%d", &(n))
-typedef long long LL;
 
-double k;
-struct pt{
-    int x, y, z;
-};
-const int MAXN = 1024;
 int n;
-pt pts[MAXN];
+int x[1005], y[1005];
 
-int cost[MAXN][MAXN];
-double dist[MAXN][MAXN];
-double adj[MAXN][MAXN];
+struct ufs{
+    vector<int> p;
 
-int prev[MAXN];
-bool done[MAXN];
-double key[MAXN];
-double prim2(){
-    Rep (i, n){
-        Rep (j, n){
-            adj[i][j] = cost[i][j] - k * dist[i][j];
-        }
+    void init(int n){
+        p.resize(n + 1);
+        for (int i=0; i<n; i++) p[i] = i;
     }
-    Rep (i, n){
-        done[i] = false;
-        key[i] = DBL_MAX;
+
+    int find(int x){
+        if (p[x] == x) return x;
+        return p[x] = find(p[x]);
     }
-    key[1] = 0.0; prev[1] = 0;
-    rep (cnt, n){
-        int u;
-        double k = DBL_MAX;
-        Rep (i, n){
-            if (!done[i] && key[i] < k){
-                u = i; k = key[i];
-            }
-        }
-        done[u] = true;
-        Rep (v, n){
-            if (!done[v] && adj[u][v] < key[v]){
-                key[v] = adj[u][v];
-                prev[v] = u;
-            }
-        }
+
+    bool unite(int u, int v){
+        u = find(u); v = find(v);
+        p[u] = v;
+        return u != v;
     }
-    double totcost = 0.0, totlen = 0.0;
-    for (int i=2; i<=n; i++){
-        totcost += cost[prev[i]][i];
-        totlen += dist[prev[i]][i];
-    }
-    return totcost / totlen;
+};
+
+
+bool judge(double limit){
+    ufs u;
+    u.init(n);
+    for (int i=1; i<=n; i++)
+        for (int j=i+1; j<=n; j++)
+            if (hypot(double(x[i]-x[j]), double(y[i]-y[j])) <= limit)
+                u.unite(i, j);
+    return u.find(1) == u.find(2);
 }
 
-
 int main(){
-    ios::sync_with_stdio(false);    cin.tie(0);
-    while (read(n), n){
+    int T = 0;
+    while (scanf("%d", &n), n){
+        T++;
         Rep (i, n)
-            read(pts[i].x), read(pts[i].y), read(pts[i].z);
-        Rep (i, n)
-            Rep (j, n)
-                dist[i][j] = hypot(double(pts[i].x - pts[j].x), double(pts[i].y - pts[j].y)),
-                cost[i][j] = abs(pts[i].z - pts[j].z);
-        k = 1e5;
-        double nxt;
-        while (fabs((nxt = prim2()) - k) > 1e-6){
-            k = nxt;
+            scanf("%d%d", x+i, y+i);
+        double l = 0.0; double r = 2000.0;
+        double mid = 0.0;
+        while (r - l > 0.0001){
+            mid = (r + l) / 2;
+            if (judge(mid)) r = mid; else l = mid;
         }
-        printf("%.3f\n", nxt);
+        printf("Scenario #%d\nFrog Distance = %.3f\n\n", T, mid);
     }
     return 0;
 }

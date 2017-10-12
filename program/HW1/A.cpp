@@ -1,70 +1,79 @@
 #include <iostream>
 #include <algorithm>
+#include <utility>
+#include <cstdio>
+#include <queue>
 using namespace std;
 
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define Rep(i, n) for (int i = 1; i <= (n); i++)
 #define range(x) (x).begin(), (x).end()
-#define pb push_back
-#define mt make_tuple
-typedef long long LL;
-const int MAXV = 105;
-const int MAXE = 10005;
 
-int n, m;
+typedef pair<int ,int > cost;
+
+cost operator + (const cost& lhs, const cost& rhs){
+    return cost(lhs.first + rhs.first, lhs.second+rhs.second);
+}
+
+const int INF = 0x7f7f7f7f;
+const int MAXV = 10005;
+const int MAXE = 500005;
 struct edge{
-    int u, v, w;
-    bool operator < (const edge& e) const {
-        return w < e.w;
+    int u, v;
+    cost w;
+};
+
+struct graph{
+    int V;
+    vector<edge> adj[MAXV];
+    cost d[MAXV];
+
+    void add_edge(int u, int v, cost w){
+        edge e;
+        e.u = u; e.v = v; e.w = w;
+        adj[u].push_back(e);
     }
-} edges[MAXE];
 
-int p[MAXV];
-void init(int num){
-    for (int i=1; i<=num; i++) p[i] = i;
-}
+    bool done[MAXV];
+    void dijkstra(int src){
+        typedef pair<cost, int> pii;
+        priority_queue<pii, vector<pii>, greater<pii> > q;
 
-int parent(int x){
-    if (p[x] == x) return x;
-    return p[x] = parent(p[x]);
-}
-
-bool unite(int u, int v){
-    u = parent(u); v = parent(v);
-    p[u] = v; return u != v;
-}
-
-LL tot;
-void kruskal(){
-    init(n);
-    sort(edges, edges + m);
-    int curn = 1;
-    tot = 0;
-    for (int i = 0; curn < n; i++){
-        if (unite(edges[i].u, edges[i].v)){
-            tot += edges[i].w;// choose the i-th edge
-            curn++;
+        fill(d, d + V + 1, cost(INF, INF));
+        d[src] = cost(0, 0);
+        fill(done, done + V + 1, false);
+        q.push(make_pair(cost(0, 0), src));
+        while (!q.empty()){
+            int u = q.top().second; q.pop();
+            if (done[u]) continue;
+            done[u] = true;
+            rep (i, adj[u].size()){
+                edge e = adj[u][i];
+                if (d[e.v] > d[u] + e.w){
+                    d[e.v] = d[u] + e.w;
+                    q.push(make_pair(d[e.v], e.v));
+                }
+            }
         }
     }
-    cout << tot << endl;
-}
+};
 
-int mat[MAXV][MAXV];
-
+int n, m, s, t;
 int main(){
-    ios::sync_with_stdio(false);    cin.tie(0);
-    while (cin >> n){
-        m = 0;
-        int t;
-        for (int i=1; i<=n; i++)
-            for (int j=1; j<=n; j++){
-                cin >> t;
-                edges[m].u = i;
-                edges[m].v = j;
-                edges[m].w = t;
-                m++;
-            }
-        kruskal();
+    while(true){
+        graph g;
+        scanf("%d%d", &n, &m);
+        if (n==0 && m==0) break;
+        g.V = n;
+        while(m--){
+            int a, b, d, p;
+            scanf("%d%d%d%d", &a, &b, &d, &p);
+            g.add_edge(a, b, cost(d, p));
+            g.add_edge(b, a, cost(d, p));
+        }
+        scanf("%d%d", &s, &t);
+        g.dijkstra(s);
+        printf("%d %d\n", g.d[t].first, g.d[t].second);
     }
     return 0;
 }
