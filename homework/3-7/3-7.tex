@@ -1,0 +1,310 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.7}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[GC] Problem 28.1-2}
+  By using formula (28.8) repeatedly, we can get the LU decomposition of a matrix.
+  \begin{align*}
+    A &= \begin{pmatrix}
+           4 & -5 & 6 \\
+           8 & -6 & 7 \\
+           12 & -7 & 12
+         \end{pmatrix} \\
+      &= \begin{pmatrix}
+           1 & 0 & 0 \\
+           2 & 1 & 0 \\
+           3 & 0 & 1
+         \end{pmatrix}
+         \begin{pmatrix}
+           4 & -5 & 6 \\
+           0 & 4 & -5 \\
+           0 & 8 & -6
+         \end{pmatrix} \\
+      &= \begin{pmatrix}
+           1 & 0 & 0 \\
+           2 & 1 & 0 \\
+           3 & 2 & 1
+         \end{pmatrix}
+         \begin{pmatrix}
+           4 & -5 & 6 \\
+           0 & 4 & -5 \\
+           0 & 0 & 4
+         \end{pmatrix}
+  \end{align*}
+
+  $$ L = \begin{pmatrix}
+           1 & 0 & 0 \\
+           2 & 1 & 0 \\
+           3 & 2 & 1
+         \end{pmatrix},
+     U = \begin{pmatrix}
+           4 & -5 & 6 \\
+           0 & 4 & -5 \\
+           0 & 0 & 4
+         \end{pmatrix} $$
+
+
+  \section{[GC] Problem 28.1-3}
+  We use the algorithm described in \proc{LUP-Decomposition} to calculate the LUP decomposition. \par
+  For the first iteration, $p = 3$, $\pi = (3, 2, 1)$
+  $$ A \rightarrow
+       \begin{pmatrix}
+           5 & 8 & 2 \\
+           2 & 0 & 3 \\
+           1 & 5 & 4
+       \end{pmatrix}
+       \rightarrow
+       \begin{pmatrix}
+           5 & 8 & 2 \\
+           2/5 & -16/5 & 11/5 \\
+           1/5 & 17/5 & 18/5
+       \end{pmatrix} $$
+  For the second iteration, $p = 3$, $\pi = (3, 1, 2)$
+  $$
+   A \rightarrow
+       \begin{pmatrix}
+           5 & 8 & 2 \\
+           1/5 & 17/5 & 18/5 \\
+           2/5 & -16/5 & 11/5
+       \end{pmatrix}
+     \rightarrow
+       \begin{pmatrix}
+           5 & 8 & 2 \\
+           1/5 & 17/5 & 18/5 \\
+           2/5 & -16/17 & 95/17
+       \end{pmatrix}
+  $$
+  Therefore, $\pi = (3, 1, 2)$,
+  $$ L = \begin{pmatrix}
+           1 & 0 & 0 \\
+           1/5 & 1 & 0 \\
+           2/5 & -16/17 & 1
+         \end{pmatrix} ,
+   U = \begin{pmatrix}
+           5 & 8 & 2 \\
+           0 & 17/5 & 18/5 \\
+           0 & 0 & 95/17
+       \end{pmatrix} $$
+  Multiplying $P$ on both sides and substitute $PA$ with $LU$, we obtain
+  $$ \begin{pmatrix}
+       1 & 0 & 0 \\
+       1/5 & 1 & 0 \\
+       2/5 & -16/17 & 1
+     \end{pmatrix}
+     \begin{pmatrix}
+       5 & 8 & 2 \\
+       0 & 17/5 & 18/5 \\
+       0 & 0 & 95/17
+     \end{pmatrix}
+     \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}
+     =
+     \begin{pmatrix} 5 \\ 12 \\ 9 \end{pmatrix} $$
+  Eliminating $L$,
+  $$ \begin{pmatrix}
+       5 & 8 & 2 \\
+       0 & 17/5 & 18/5 \\
+       0 & 0 & 95/17
+     \end{pmatrix}
+     \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}
+     =
+     \begin{pmatrix} 5 \\ 11 \\ 295/17 \end{pmatrix} $$
+  Eliminating $U$,
+  $$ \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}
+     =
+     \begin{pmatrix} -3/19 \\ -1/19 \\ 59/19 \end{pmatrix}. $$
+
+  \section{[GC] Problem 28.1-6}
+  Since $L$ is a unit lower-triangular matrix, it is non-singular. Therefore, if a matrix $A$ has an LU decomposition is singular if and only if $U$ is singular. Hence, let $L$ be any $n \times n$ unit lower-triangular matrix, e.g. $I_n$, and $U$ be any $n \times n$ singular upper-triangular matrix, e.g. $0_{n \times n}$, then $A=LU=0_{n \times n}$ is an $n \times n$ singular matrix that has LU decomposition.
+
+  \section{[GC] Problem 28.1-7}
+  It is necessary in \proc{LU-Decomposition}, because $a_{nn}$ needs be assigned to $u_{nn}$.
+  It is unnecessary in \proc{LUP-Decomposition}, because when executing the \For iteration with $k = n$, $k'$ must be $k$, thus the statements in line 13--15 have no effect, and the statements in line 16--19 will not be executed at all.
+
+  \section{[GC] Problem 28.2-1}
+  The first half, an $M(n)$-time matrix-multiplication algorithm implies an $O(M(n))$-time squaring algorithm, is obvious, because to square a matrix is just to multiply two identical matrices. \par
+  For the second half, if $S(n) = \Omega(n^3)$, we can use $\Theta(n^3) = O(S(n))$ brute-force matrix-multiplication algorithm to compute the product of two $n \times n$ matrices. Otherwise, we can compute the product of two $n \times n$ matrices $AB$ by squaring a $2n \times 2n$ matrix:
+  $$ \begin{pmatrix} A & B \\ 0 & 0 \end{pmatrix}^2
+     =
+     \begin{pmatrix} A^2 & AB \\ 0 & 0 \end{pmatrix}. $$
+  Since $S(n) = O(n^3)$ is polynomially bounded, we have the regularity property $S(2n) = O(S(n))$, and the total running times is $O(S(2n)) = O(S(n))$
+
+  \section{[GC] Problem 28.2-2}
+  (to be done)
+
+  \section{[GC] Problem 28.2-3}
+  If the LUP decomposition of matrix $A$ is $PA = LU$, since $\det(P) = \det(L) = 1$ and $U$ is triangular, the determinant of $A$ is the product of diagonal entries of $U$. We have proved that computing LUP decomposition and multiplying two matrices have essentially the same difficulty, so we can compute the determinant in $O(M(n))$-time if $M(n)$-time matrix-multiplication algorithm exists. \par
+  (to be done)
+
+  \section{[GC] Problem 28.3-1}
+  Let $A$ be a symmetric positive-definite matrix. Suppose, to the contrary, that there exists $i$, such that $a_{ii} \leq 0$. Let $x_j = \delta_{ij}$ ($\delta_{ij}$ is the Kronecker delta), then vector $x \neq 0$, and $x^{\text{T}}Ax = a_{ii} \leq 0$, which contradicts the definition of positive-definite matrix.
+
+  \section{[GC] Problem 28.3-3}
+  Let $A$ be a symmetric positive-definite matrix. Suppose, to the contrary that $a_{ij}$ ($i \neq j$)p is the maximum element. Since $a_{ii} > 0$, let $x_k = -(a_{ij}/a_{ii})\delta_{ik} + \delta_{jk}$, then vector $x \neq 0$. Consider $x^{\text{T}}Ax$, we have
+  \begin{align*}
+    x^{\text{T}}Ax &= a_{ii}\left(-\frac{a_{ij}}{a_{ii}}\right)^2 + 2a_{ij}\left(-\frac{a_{ij}}{a_{ii}}\right) + a_{jj} \\
+    &= \frac{a_{ii}a_{jj}-a_{ij}^2}{a_{ii}}.
+  \end{align*}
+  Since $a_{ii}$ is positive and $a_{ij} \geq a_{ii} > 0$, $a_{ij} \geq a_{ii} > 0$, we have $x^{\text{T}}Ax \leq 0$, which leads to contradiction.
+  
+  \section{[GC] Problem 28-1}
+  \begin{enumerate}
+    \item By using formula (28.8) repeatedly,
+      \begin{align*}
+        A &= \begin{pmatrix}
+               1 & -1 &  &  &  \\
+               -1 & 2 & -1 &  &  \\
+                & -1 & 2 & -1 &  \\
+                &  & -1 & 2 & -1 \\
+                &  &  & -1 & 2
+             \end{pmatrix} \\
+          &= \begin{pmatrix}
+               1 &  &  &  &  \\
+               -1 & 1 &  &  &  \\
+                &  & 1 &  &  \\
+                &  &  & 1 &  \\
+                &  &  &  & 1
+             \end{pmatrix}
+             \begin{pmatrix}
+               1 & -1 &  &  &  \\
+                & 1 & -1 &  &  \\
+                & -1 & 2 & -1 &  \\
+                &  & -1 & 2 & -1 \\
+                &  &  & -1 & 2
+             \end{pmatrix} \\
+          &= \begin{pmatrix}
+               1 &  &  &  &  \\
+               -1 & 1 &  &  &  \\
+                & -1 & 1 &  &  \\
+                &  &  & 1 &  \\
+                &  &  &  & 1
+             \end{pmatrix}
+             \begin{pmatrix}
+               1 & -1 &  &  &  \\
+                & 1 & -1 &  &  \\
+                &  & 1 & -1 &  \\
+                &  & -1 & 2 & -1 \\
+                &  &  & -1 & 2
+             \end{pmatrix} \\
+          &= \begin{pmatrix}
+               1 &  &  &  &  \\
+               -1 & 1 &  &  &  \\
+                & -1 & 1 &  &  \\
+                &  & -1 & 1 &  \\
+                &  &  &  & 1
+             \end{pmatrix}
+             \begin{pmatrix}
+               1 & -1 &  &  &  \\
+                & 1 & -1 &  &  \\
+                &  & 1 & -1 &  \\
+                &  &  & 1 & -1 \\
+                &  &  & -1 & 2
+             \end{pmatrix} \\
+          &= \begin{pmatrix}
+               1 &  &  &  &  \\
+               -1 & 1 &  &  &  \\
+                & -1 & 1 &  &  \\
+                &  & -1 & 1 &  \\
+                &  &  & -1 & 1
+             \end{pmatrix}
+             \begin{pmatrix}
+               1 & -1 &  &  &  \\
+                & 1 & -1 &  &  \\
+                &  & 1 & -1 &  \\
+                &  &  & 1 & -1 \\
+                &  &  &  & 1
+             \end{pmatrix} 
+      \end{align*}
+      $$ L = \begin{pmatrix}
+               1 &  &  &  &  \\
+               -1 & 1 &  &  &  \\
+                & -1 & 1 &  &  \\
+                &  & -1 & 1 &  \\
+                &  &  & -1 & 1
+             \end{pmatrix},
+         U = \begin{pmatrix}
+               1 & -1 &  &  &  \\
+                & 1 & -1 &  &  \\
+                &  & 1 & -1 &  \\
+                &  &  & 1 & -1 \\
+                &  &  &  & 1
+             \end{pmatrix}. $$
+      \item Let $Ux = y$, then $Ly = (1, 1, 1, 1, 1)^{\text{T}}$. By applying forward substitution, we get $y_1 = 1$, $y_2 = y_1 + 1 = 2$, $y_3 = y_2 + 1 = 3$, $y_4 = y_3 + 1 = 4$, $y_5 = y_4+1 = 5$. Hence $Ux = y = (1, 2, 3, 4, 5)^{\text{T}}$. By applying backward substitution, we get $x_5 = 5$, $x_4 = x_5+4 = 9$, $x_3 = x_4+3 = 12$, $x_2 = x_3 + 2 = 14$, $x_1 = x_2 + 1 = 15$, i.e. $x = (15, 14, 12 ,9, 5)^{\text{T}}$.
+      \item The inverses of $L$ and $U$ are easy to find:
+      $$ L^{-1} = 
+          \begin{pmatrix}
+            1 &  &  &  &  \\
+            1 & 1 &  &  &  \\
+            1 & 1 & 1 &  &  \\
+            1 & 1 & 1 & 1 &  \\
+            1 & 1 & 1 & 1 & 1
+          \end{pmatrix},
+           U^{-1} =
+          \begin{pmatrix}
+            1 & 1 & 1 & 1 & 1 \\
+             & 1 & 1 & 1 & 1 \\
+             &  & 1 & 1 & 1 \\
+             &  &  & 1 & 1 \\
+             &  &  &  & 1
+          \end{pmatrix}, $$
+          and the inverse of $A$ is 
+          $$ A^{-1} = (LU)^{-1} = U^{-1}L^{-1} = 
+          \begin{pmatrix}
+            1 & 1 & 1 & 1 & 1 \\
+             & 1 & 1 & 1 & 1 \\
+             &  & 1 & 1 & 1 \\
+             &  &  & 1 & 1 \\
+             &  &  &  & 1
+          \end{pmatrix}
+          \begin{pmatrix}
+            1 &  &  &  &  \\
+            1 & 1 &  &  &  \\
+            1 & 1 & 1 &  &  \\
+            1 & 1 & 1 & 1 &  \\
+            1 & 1 & 1 & 1 & 1
+          \end{pmatrix}
+          =
+          \begin{pmatrix}
+            5 & 4 & 3 & 2 & 1 \\
+            4 & 4 & 3 & 2 & 1 \\
+            3 & 3 & 3 & 2 & 1 \\
+            2 & 2 & 2 & 2 & 1 \\
+            1 & 1 & 1 & 1 & 1
+          \end{pmatrix}$$
+      \item Recall formula (28.8):
+      $$A = \begin{pmatrix} a_{11} & w^{\text{T}} \\ v & A' \end{pmatrix}
+          = \begin{pmatrix} 1 & 0 \\ v/a_{11} & I_{n-1} \end{pmatrix}
+          \begin{pmatrix} a_{11} & w^{\text{T}} \\ 0 & A'-vw^{\text{T}}/a_{11} \end{pmatrix}$$
+      Note that all elements except the first of $v$ and $w^{\text{T}}$ are zero, and all entries except the top-left one of $vw^{\text{T}}/a_{11}$ are zero, thus $A'-vw^{\text{T}}/a_{11}$ is still a tridiagonal matrix, which means that we can transform an $n \times n$ tridiagonal matrix LU decomposition problem to an $(n-1) \times (n-1)$ one in constant time, and thus computing LU decomposition in $O(n)$ time. Furthermore, we can easily conclude by mathematical induction, that $L$ and $U$ are lower bidiagonal and upper bidiagonal, respectively. \par
+      For a lower bidiagonal matrix $L$, we can solve $Ly = b$ in $O(n)$ time:
+      $$y_1 = \frac{b_1}{l_{11}},\quad y_2 = \frac{b_2-l_{21}b_1}{l_{22}},\quad \cdots, \quad y_n = \frac{b_n-l_{n, n-1}b_{n-1}}{l_{nn}}.$$
+      Likewise, for upper bidiagonal matrix $U$, we can solve $Uy = b$ in $O(n)$ time. Therefore, we can solve $Ax = b$ in $O(n)$ time by performing LU decomposition if $A$ is tridiagonal. \par
+      Since forming $A^{-1}$ takes $\Omega(n^2)$ to compute the entries, any method based on the inverse is asymptotically more expensive in the worst case.
+    \item (to be done)
+  \end{enumerate}
+\end{document}
