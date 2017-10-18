@@ -158,20 +158,20 @@
   (to be done)
 
   \section{[GC] Problem 28.2-3}
-  If the LUP decomposition of matrix $A$ is $PA = LU$, since $\det(P) = \det(L) = 1$ and $U$ is triangular, the determinant of $A$ is the product of diagonal entries of $U$. We have proved that computing LUP decomposition and multiplying two matrices have essentially the same difficulty, so we can compute the determinant in $O(M(n))$-time if $M(n)$-time matrix-multiplication algorithm exists. \par
+  If the LUP decomposition of matrix $A$ is $PA = LU$, since $\det(L) = 1$ and $U$ is triangular, the determinant of $A$ is the product of diagonal entries of $U$ divided by $\det(P) = (-1)^s$, where $s$ is the number of inversion pairs in $P$, which is easy to find. We have proved that computing LUP decomposition and multiplying two matrices have essentially the same difficulty, so we can compute the determinant in $O(M(n))$-time if $M(n)$-time matrix-multiplication algorithm exists. \par
   (to be done)
 
   \section{[GC] Problem 28.3-1}
   Let $A$ be a symmetric positive-definite matrix. Suppose, to the contrary, that there exists $i$, such that $a_{ii} \leq 0$. Let $x_j = \delta_{ij}$ ($\delta_{ij}$ is the Kronecker delta), then vector $x \neq 0$, and $x^{\text{T}}Ax = a_{ii} \leq 0$, which contradicts the definition of positive-definite matrix.
 
   \section{[GC] Problem 28.3-3}
-  Let $A$ be a symmetric positive-definite matrix. Suppose, to the contrary that $a_{ij}$ ($i \neq j$)p is the maximum element. Since $a_{ii} > 0$, let $x_k = -(a_{ij}/a_{ii})\delta_{ik} + \delta_{jk}$, then vector $x \neq 0$. Consider $x^{\text{T}}Ax$, we have
+  Let $A$ be a symmetric positive-definite matrix. Suppose, to the contrary that $a_{ij}$ ($i \neq j$) is the maximum element. Since $a_{ii} > 0$, let $x_k = -(a_{ij}/a_{ii})\delta_{ik} + \delta_{jk}$, then vector $x \neq 0$. Consider $x^{\text{T}}Ax$, we have
   \begin{align*}
     x^{\text{T}}Ax &= a_{ii}\left(-\frac{a_{ij}}{a_{ii}}\right)^2 + 2a_{ij}\left(-\frac{a_{ij}}{a_{ii}}\right) + a_{jj} \\
     &= \frac{a_{ii}a_{jj}-a_{ij}^2}{a_{ii}}.
   \end{align*}
   Since $a_{ii}$ is positive and $a_{ij} \geq a_{ii} > 0$, $a_{ij} \geq a_{ii} > 0$, we have $x^{\text{T}}Ax \leq 0$, which leads to contradiction.
-  
+
   \section{[GC] Problem 28-1}
   \begin{enumerate}
     \item By using formula (28.8) repeatedly,
@@ -238,7 +238,7 @@
                 &  & 1 & -1 &  \\
                 &  &  & 1 & -1 \\
                 &  &  &  & 1
-             \end{pmatrix} 
+             \end{pmatrix}
       \end{align*}
       $$ L = \begin{pmatrix}
                1 &  &  &  &  \\
@@ -256,7 +256,7 @@
              \end{pmatrix}. $$
       \item Let $Ux = y$, then $Ly = (1, 1, 1, 1, 1)^{\text{T}}$. By applying forward substitution, we get $y_1 = 1$, $y_2 = y_1 + 1 = 2$, $y_3 = y_2 + 1 = 3$, $y_4 = y_3 + 1 = 4$, $y_5 = y_4+1 = 5$. Hence $Ux = y = (1, 2, 3, 4, 5)^{\text{T}}$. By applying backward substitution, we get $x_5 = 5$, $x_4 = x_5+4 = 9$, $x_3 = x_4+3 = 12$, $x_2 = x_3 + 2 = 14$, $x_1 = x_2 + 1 = 15$, i.e. $x = (15, 14, 12 ,9, 5)^{\text{T}}$.
       \item The inverses of $L$ and $U$ are easy to find:
-      $$ L^{-1} = 
+      $$ L^{-1} =
           \begin{pmatrix}
             1 &  &  &  &  \\
             1 & 1 &  &  &  \\
@@ -272,8 +272,8 @@
              &  &  & 1 & 1 \\
              &  &  &  & 1
           \end{pmatrix}, $$
-          and the inverse of $A$ is 
-          $$ A^{-1} = (LU)^{-1} = U^{-1}L^{-1} = 
+          and the inverse of $A$ is
+          $$ A^{-1} = (LU)^{-1} = U^{-1}L^{-1} =
           \begin{pmatrix}
             1 & 1 & 1 & 1 & 1 \\
              & 1 & 1 & 1 & 1 \\
@@ -300,11 +300,29 @@
       $$A = \begin{pmatrix} a_{11} & w^{\text{T}} \\ v & A' \end{pmatrix}
           = \begin{pmatrix} 1 & 0 \\ v/a_{11} & I_{n-1} \end{pmatrix}
           \begin{pmatrix} a_{11} & w^{\text{T}} \\ 0 & A'-vw^{\text{T}}/a_{11} \end{pmatrix}$$
-      Note that all elements except the first of $v$ and $w^{\text{T}}$ are zero, and all entries except the top-left one of $vw^{\text{T}}/a_{11}$ are zero, thus $A'-vw^{\text{T}}/a_{11}$ is still a tridiagonal matrix, which means that we can transform an $n \times n$ tridiagonal matrix LU decomposition problem to an $(n-1) \times (n-1)$ one in constant time, and thus computing LU decomposition in $O(n)$ time. Furthermore, we can easily conclude by mathematical induction, that $L$ and $U$ are lower bidiagonal and upper bidiagonal, respectively. \par
+      Note that all elements except the first of $v$ and $w^{\text{T}}$ are zero, and all entries except the one on the top left corner of $vw^{\text{T}}/a_{11}$ are zero, thus $A'-vw^{\text{T}}/a_{11}$ is still a tridiagonal matrix, and by Schur complement lemma (Lemma 28.5), it is still symmetric and positive-definite, which means that we can transform an $n \times n$ symmetric positive-definite tridiagonal matrix LU decomposition problem to an $(n-1) \times (n-1)$ one in constant time, and thus computing LU decomposition in $O(n)$ time. Furthermore, we can easily conclude by mathematical induction, that $L$ and $U$ are lower bidiagonal and upper bidiagonal, respectively. \par
       For a lower bidiagonal matrix $L$, we can solve $Ly = b$ in $O(n)$ time:
       $$y_1 = \frac{b_1}{l_{11}},\quad y_2 = \frac{b_2-l_{21}b_1}{l_{22}},\quad \cdots, \quad y_n = \frac{b_n-l_{n, n-1}b_{n-1}}{l_{nn}}.$$
       Likewise, for upper bidiagonal matrix $U$, we can solve $Uy = b$ in $O(n)$ time. Therefore, we can solve $Ax = b$ in $O(n)$ time by performing LU decomposition if $A$ is tridiagonal. \par
       Since forming $A^{-1}$ takes $\Omega(n^2)$ to compute the entries, any method based on the inverse is asymptotically more expensive in the worst case.
-    \item (to be done)
+    \item We try to apply formula (28.8) repeatedly, if the entry on the top left corner is nonzero. In case that a zero lies on the top left corner, we swap the first two rows, or equivalently, left multiply a permutation matrix $P_{21}$ on both sides, and we only have to compute the LUP decomposition of tridiagonal matrix $A'$.
+        $$ A = \begin{pmatrix}
+           0 & a_{12} & 0 & 0 \\
+           a_{21} & a_{22} & a_{23} & 0 \\
+           0 & a_{32} & \ddots & \ddots \\
+           0 & 0 & \ddots & \ddots
+         \end{pmatrix}$$
+         $$ P_{21}A = \begin{pmatrix}
+           a_{21} & a_{22} & a_{23} & 0 \\
+           0 & a_{12} & 0 & 0 \\
+           0 & a_{32} & \ddots & \ddots \\
+           0 & 0 & \ddots & \ddots
+         \end{pmatrix} = I
+         \begin{pmatrix}
+           a_{21} & w^{\text{T}} \\
+           0 & A'
+         \end{pmatrix} = LU'
+         $$ \par
+         Therefore, we obtain $PA = LU$ in $O(n)$ time. The only subtlety here, is that the matrix $U$ might be upper tridiagonal, instead of bidiagonal, due to row switching. But this do not affect the result, for, every unknown $x_i$ in a linear equation system  $Ux = b$ whose coefficient matrix $U$ is upper tridiagonal only depends on $b_i$ and $x_{i+1}$, $x_{i+2}$, if exist, which means we can still solve such system in $O(n)$ time.
   \end{enumerate}
 \end{document}
