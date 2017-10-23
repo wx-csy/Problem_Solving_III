@@ -1,0 +1,43 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.7}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[GC] Problem 29.1-4}
+  \begin{align*}
+    \text{minimize} && -2x_1'  +  2x_1''  -  7x_2  +  x_3' \\
+    \text{subject to} \\
+    && -x_1'  +  x_1''  -  x_3'  &\leq  7 \\
+    && x_1'  -  x_1''  +  x_3'  &\leq  7 \\
+    && -3x_1'  +  3x_1''  -  x_2  &\leq  24 \\
+    && x_1',  x_1'',  x_2,  x_3'  &\geq  0\\
+    \text{where}  \\
+    && x_1' - x_1'' &= x_1\\
+    && x_3' &= -x_3 
+  \end{align*}
+\end{document}
