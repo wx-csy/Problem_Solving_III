@@ -11,7 +11,7 @@
 
 \setlength{\columnsep}{7mm}
 
-\newcommand{\homeworkno}{3.7}
+\newcommand{\homeworkno}{3.8}
 \pagestyle{fancy}
 \lhead{Problem Solving: Homework \homeworkno}
 \chead{}
@@ -27,7 +27,7 @@
   \author{Name: Chen Shaoyuan \and Student ID: 161240004}
   \maketitle
 
-  \section{[GC] Problem 29.1-4}
+  \section{[TC] Problem 29.1-4}
   \begin{align*}
     \text{maximize} && -2x_1'  +  2x_1''  -  7x_2  +  x_3' \\
     \text{subject to} \\
@@ -40,7 +40,7 @@
     && x_3' &= -x_3
   \end{align*}
 
-  \section{[GC] Problem 29.1-5}
+  \section{[TC] Problem 29.1-5}
   \begin{align*}
     z & = 2x_1 - 6x_3 \\
     x_4 &= 7 - x_1 - x_2 + x_3 \\
@@ -48,13 +48,13 @@
     x_6 &= -x_1 + 2x_2 + 2x_3
   \end{align*}
 
-  \section{[GC] Problem 29.1-6}
+  \section{[TC] Problem 29.1-6}
   The second constraint implies $x_1 + x_2 \geq 5$, which contradicts the first one. So this linear program is infeasible.
 
-  \section{[GC] Problem 29.1-7}
+  \section{[TC] Problem 29.1-7}
   Let $x_1 = 2t, x_2 = t$. It is easy to verify, that the solution $(x_1, x_2)$ is feasible if $t>1$. Therefore, the objective function $z = x_1 - x_2 = 2t - t  = t$ can be arbitrarily large, and this linear program is unbounded.
 
-  \section{[GC] Problem 29.1-9}
+  \section{[TC] Problem 29.1-9}
   \begin{align*}
     \text{minimize} && x_1 + x_2 \\
     \text{subject to} \\
@@ -62,9 +62,9 @@
   \end{align*}
   In this program, the feasible region is obviously unbounded, but it has finite optimal objective value $0$.
 
-  \section{[GC] Problem 29.2-2}
+  \section{[TC] Problem 29.2-2}
   \begin{align*}
-    \text{minimize} && d_y \\
+    \text{maximize} && d_y \\
     \text{subject to} \\
     && d_s & = 0 \\
     && d_t - d_s & \leq 3 \\
@@ -79,30 +79,30 @@
     && d_z - d_x & \leq 2
   \end{align*}
 
-  \section{[GC] Problem 29.2-3}
+  \section{[TC] Problem 29.2-3}
   \begin{align*}
-    \text{minimize} && \sum_{v \in V} d_v \\
+    \text{maximize} && \sum_{v \in V} d_v \\
     \text{subject to} \\
     && d_s & = 0 \\
     && d_v - d_u & \leq w(u, v), \forall (u, v) \in E
   \end{align*}
 
-  \section{[GC] Problem 29.2-6}
+  \section{[TC] Problem 29.2-6}
   \begin{align*}
     \text{maximize} && \sum_{(u, v) \in E} f_{uv} \\
     \text{subject to} \\
     && f_{uv} & \geq 0, \forall (u, v) \in E \\
-    && \sum_{u \in V} f_{uv} & \leq 1, \forall v \in V \\
-    && \sum_{v \in V} f_{uv} & \leq 1, \forall u \in V
+    && \sum_{u \in V} f_{uv} & \leq 1, \forall v \in P_2 \\
+    && \sum_{v \in V} f_{uv} & \leq 1, \forall u \in P_1
   \end{align*}
 
-  \section{[GC] Problem 29.3-2}
+  \section{[TC] Problem 29.3-2}
   Line 14 of \proc{Pivot} gives the new value of $v$: $\hat{v} = v + c_e \hat{b}_e$. Line 14 of \proc{Simplex} guarantees that $c_e$ is positive, while $\hat{b}_e$ is defined as $b_l / a_{le}$. Note that the index $l$ chosen in line 9 of \proc{Simplex} must satisfy that $\Delta_{i} \neq \infty$, which means $a_{le}$ is positive. $b_l$ is nonnegative, for otherwise the program is infeasible. Therefore, the call to \proc{Pivot} in \proc{Simplex} never decreases the value of $v$.
 
-  \section{[GC] Problem 29.3-2}
+  \section{[TC] Problem 29.3-2}
   First, the procedure \proc{Pivot} do not changes the nonnegativity constraints, which are still $x_i > 0, \forall i \in N \cup B$. Second, it solves one equality for the entering variable, and substitutes the entering variable in the target function, which does not change the function. Then, it replaces the equality solved before with its solution form, and substitutes the solution for the entering variable in all other equalities and target functions. In the new equalities, if we solve the equality containing the original entering variable for the original leaving variable, and do substitutions like before, we will get the original equalities and target function. Therefore, the slack form given to \proc{Pivot} and the one it returns are equivalent.
 
-  \section{[GC] Problem 29.3-5}
+  \section{[TC] Problem 29.3-5}
   First, convert it to slack form:
   \begin{align*}
     z &= 18x_1 + 12.5x_2 \\
@@ -126,7 +126,7 @@
   \end{align*}
   Now, all coefficients of the target function is not positive, so the algorithm terminates. The optimal solution is $(x_1, x_2) = (12, 8)$, and the optimal value is 316.
 
-  \section{[GC] Problem 29.4-2}
+  \section{[TC] Problem 29.4-2}
   Consider a linear program which only contains greater-than-or-equal-to constraints:
   \begin{align*}
     \text{max./min.} && \sum_{j = 1}^{n} c_j x_j \\
@@ -159,8 +159,7 @@
   \begin{align*}
     \text{max./min.} && \sum_{j = 1}^{n} c_j x_j \\
     \text{subject to} \\
-    && \sum_{j = 1}^{n} a_{ij} x_j \geq b_i, \text{for } 0 < i \leq m, \\
-  \end{align*}
+    && \sum_{j = 1}^{n} a_{ij} x_j \geq b_i, \text{for } 0 < i \leq m \end{align*}
   is
   \begin{align*}
     \text{min./max.} && \sum_{i = 1}^{n} b_iy_i \\
@@ -172,7 +171,7 @@
   \begin{align*}
     \text{max./min.} && \sum_{j = 1}^{n} c_j x_j \\
     \text{subject to} \\
-    && \sum_{j = 1}^{n} a_{ij} x_j = b_i, \text{for } 0 < i \leq m, \\
+    && \sum_{j = 1}^{n} a_{ij} x_j = b_i, \text{for } 0 < i \leq m
   \end{align*}
   its dual program is
   \begin{align*}
@@ -202,12 +201,13 @@
     \text{subject to} \\
     && \sum_{i = 1}^{m_3} a_{ij} y_i  = 0, \text{ for } 0 < j \leq n \\
     && y_i \geq 0, \text{ for } 0 < i \leq m_1 \\
-    && y_i \leq 0, \text{ for } m_1 < i \leq m_2 \\
+    && y_i \leq 0, \text{ for } m_1 < i \leq m_2
   \end{align*}
 
-  \section{[GC] Problem 29-1}
+  \section{[TC] Problem 29-1}
   \begin{enumerate}
     \item We can arbitrarily define a target function and run the algorithm for linear programming. If it returns an optimal solution or reports the program is unbounded, then the inequalities are feasible; otherwise, they are infeasible.
-    \item First, we use the algorithm linear-inequality feasibility algorithm to get feasible solutions for the linear program and its dual. Second, calculate the values of target functions $v_l, v_r$, and the optimal value must between the two values. Third, we apply binary search, that is, add a constraint, $z < (v_l+v_r)/2$, to guess the optimal value. If the inequalities are satisfiable, then replace $v_l$ with $(v_l+v_r)/2$ if the target function is to be maximized, or $v_r$ if is to be minimized; otherwise, replace $v_r$ or $v_l$ with $(v_l+v_r)/2$. Repeatedly doing this until the error is admissible, the final feasible solution is optimal.
+    \item First, we take the dual of the program, and use the algorithm to test whether the primal and the dual are satisfiable or not. If the primal is unsatisfiable, then it is infeasible. If it is satisfiable, but its dual is unsatisfiable, then the program is unbounded. If both the primal and the dual are satisfiable, then the program is feasible and bounded. In this case, we combine the constraints of the primal and the dual, and add a new constraint that let the target functions in primal and dual be equal. By strong duality theorem, the exists exactly one set of values that satisfies these constraints, which is the optimal solution of the primal. \par
+        If the algorithm for linear-inequality feasibility problem would return a satisfiable set of values, the proof is done. But we can still get the optimal solution if not. We modify one equality in the primal to an equation, and run the algorithm to test whether the optimal solution lies on the hyperplane. Repeatedly doing this, we get a set of hyperplanes represented by equations, where the optimal solution lies. By solving these linear equations, we get the optimal solution. Note that the equations may have more than one solution, which means the optimal solutions form a polytope of positive dimension, rather than a point.
   \end{enumerate}
 \end{document}

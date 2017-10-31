@@ -1,0 +1,161 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.9}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[TC] Problem 30.1-2}
+  Let $A(x) = \sum_{i=0}^{n-1} a_ix^i$, $q(x) = \sum_{i=0}^{n-2} b_ix^i$, then we have
+  \begin{align*}
+    A(x) &= q(x)(x - x_0) + r \\
+         &= -x_0b_{0} + r + \sum_{i = 1}^{n-2}(b_{i-1}-x_0b_{i})x^i + b_{n-2}x^{n-1} \\
+         &= a_0 + \sum_{i = 1}^{n-2}a_ix^i + a_{n-1}x^{n-1}
+  \end{align*}
+  By comparing the coefficients, we get the equations for computing the remainder $r$ and the coefficients of $q(x)$:
+  \begin{align*}
+    b_{n-2} &= a_{n-1} \\
+    b_{n-3} &= x_0b_{n-2} + a_{n-2} \\
+    \cdots & \cdots \\
+    b_{1} &= x_0b_2 + a_2 \\
+    b_{0} &= x_0b_1 + a_1 \\
+    r &= x_0b_0 + a_0
+  \end{align*}
+
+  \section{[TC] Problem 30.1-4}
+  We can get one linear equation by substituting one point into the polynomial, and we can get less than $n$ linear equations in total. However, a polynomial of degree-bound $n$ has $n$ coefficients, and by linear algebra we know the equations have more than one solutions. Hence, the polynomial can not be uniquely determined, which means $n$ distinct point-value pairs are necessary.
+
+  \section{[TC] Problem 30.1-5}
+  We can precalculate $P(x) = \prod_j (x-x_j)$ in $O(n^2)$ time, since multiplying each term can be regarded as adding two polynomials, which takes $O(n)$ time, and there are $n$ terms in total. Then, we compute each term of the summation. For the numerator, $\prod_{j \neq k} (x - x_j) = P(x) / (x - x_k)$, which can be calculated in $O(n)$ time by using the method mentioned in Problem 30.1-2. The denominator is just the product of $n$ numbers, which can be easily calculated in $O(n)$ time. Hence all these $n$ terms can be calculated in $O(n^2)$ time. Finally, we sum up all the terms in the summation. Each term is a polynomial of degree-bound $n$ and there are $n$ terms in all, the summation can be done in $O(n^2)$ time. Therefore, the interpolation can be done in $O(n^2)$ time using equation (30.5).
+
+  \section{[TC] Problem 30.2-1}
+  By cancellation lemma,
+  $$ \omega_{n}^{n/2} = \omega_{2n}^{n} = \omega_{2}^{1} = \omega_{2} = -1 $$
+
+  \section{[TC] Problem 30.2-4}
+  \begin{codebox}
+    \Procname{$\proc{IFFT}(a)$}
+    \li $n \gets \attrib{a}{length}$
+    \li $y \gets \proc{Recursive-IFFT}(a)$
+    \li \For $i \gets 0$ \To $n-1$
+    \li \Do  $y_i = y_i / n$
+        \End
+    \li \Return $y$
+  \end{codebox}
+  \begin{codebox}
+    \Procname{$\proc{Recursive-IFFT}(a)$}
+    \zi $\cdots \cdots$ \label{li:ifft}
+    \setlinenumberplus{li:ifft}{4}
+    \li $\omega_n \gets e^{-2\pi i / n}$
+    \zi $\cdots \cdots$
+    \setlinenumberplus{li:ifft}{8}
+    \li $y^{[0]} \gets \proc{Recursive-IFFT}(a^{[0]})$
+    \li $y^{[1]} \gets \proc{Recursive-IFFT}(a^{[1]})$
+    \zi $\cdots \cdots$
+  \end{codebox}
+  The omitted parts of the procedure are exactly the same as those in $\proc{Recursive-FFT}$.
+
+  \section{[TC] Problem 30.2-5}
+  For polynomial $A(x) = a_0 + a_1 x + \cdots + a_{n-1}x^{n-1}$, we define these three new polynomials:
+  \begin{align*}
+    A^{[0]}(x) &= a_0 + a_3 x + a_6 x^2 + \cdots + a_{n-3} x^{n/3 - 1} \\
+    A^{[1]}(x) &= a_1 + a_4 x + a_7 x^2 + \cdots + a_{n-2} x^{n/3 - 1} \\
+    A^{[2]}(x) &= a_2 + a_5 x + a_8 x^2 + \cdots + a_{n-1} x^{n/3 - 1}
+  \end{align*}
+  and
+  $$ A(x) = A^{[0]}(x^3) + x A^{[1]}(x^3) + x^2 A^{[2]}(x^3) $$
+  Similarly to the halving lemma, we have $(\omega_{n}^{k+n/3})^3 = (\omega_{n}^{k+2n/3})^3 = (\omega_{n}^{k})^3$, so we divide the problem of size $n$ to three subproblems of size $n/3$. The recurrence is
+  $$ f(n) = 3f(n/3) + O(n)$$
+  By the master theorem, $f(n) = n \log n$.
+
+  \section{[TC] Problem 30.2-7}
+  The polynomial can be written as
+  $$ P(x) = \prod_{i=0}^{n-1} (x-z_i) $$
+  We can compute these multiplications by divide and conquer: we divide the multiplications into to parts, and calculate the two parts recursively, then multiply the two parts by FFT. The recurrence is
+  $$ f(n) = 2f(n/2) + O(n \log n) $$
+  We claim that $f(n) = O(n \log^2 n)$, i.e. $f(n) \leq k n \log^2 n$ for all $n$, and we are going to prove this by mathematical induction. \par
+  For the base step, we can take some $k$ large enough such that $f(2) \leq 2k \log^2 2$.
+  For the induction step, assume that $f(n_0) \leq k n_0 \log^2 n_0$ for all $n_0 < n$, then we have
+  \begin{align*}
+    f(n) & \leq 2kn/2 \log^2 (n/2) + O(n \log n) \\
+    & = kn(\log n - 1)^2 + O(n \log n) \\
+    & \leq kn\log^2 n
+  \end{align*}
+  The last inequality holds only if we take some $k$ large enough. By mathematical induction, we get that $f(n) = O(n \log^2 n)$, and thus we can find the coefficients in $O(n \log^2 n)$ time.
+
+  \section{[TC] Problem 30.2-8}
+  We have two ways to compute the inverse FFT. The first one is to replace $\omega_{n}$ by $\omega_{n}^{-1}$, then divide each term of the result by $n$. The second one is to run \proc{Iterative-FFT} reversely. DFT can be viewed as the inverse of the inverse DFT, and we use the two different ways to compute the two inverses. The pseudocode is shown below.
+  \begin{codebox}
+    \Procname{$\proc{Iterative-FFT'}(a)$}
+    \li $n \gets \attrib{a}{length}$
+    \li \For $s \gets \log_2 n$ \Downto $1$
+    \li \Do $m \gets 2^s$
+    \li     $\omega_m \gets e^{-2 \pi i / m}$
+    \li     \For $k \gets n-1 $ \To $0$ \By $-m$
+    \li     \Do $\omega = 1$
+    \li         \For $j \gets m/2 - 1$ \Downto $0$
+    \li         \Do $\omega = \omega / \omega_m$
+    \li             $u \gets (a_{k+j} + a_{k+j+m/2})/2$
+    \li             $v \gets (a_{k+j} - a_{k+j+m/2})/2$
+    \li             $a_{k+j} \gets u$
+    \li             $a_{k+j+m/2} \gets t / \omega$
+                \End
+            \End
+        \End
+    \li $\proc{Bit-Reverse-Copy}(a, A)$
+    \li \Return $A$
+    \end{codebox}
+
+  \section{[TC] Problem 30-1}
+  \begin{enumerate}
+    \item Let $u = ac$, $v = bd$, $w = (a+b)(c+d)$ be three multiplications. Then $(ax+b)(cx+d) = acx^2+(ad+bc)x+bd = ux^2 + (w-u-v)x+v$.
+    \item Assume $n$ is some power of $2$. In the first algorithm, for polynomial $A$, define
+      \begin{align*}
+        A_{L} &= a_0 + a_1 x + a_2 x^2 + \cdots + a_{n/2-1}x^{n/2} \\
+        A_{H} &= a_{n/2} + a_{n/2+1}x + a_{n/2+2}x^2 + \cdots + a_{n-1}x^{n/2}
+      \end{align*}
+      then we have
+      $$ A(x)B(x) = (A_{L} + A_{H}x^{n/2})(B_{L} + B_{H}x^{n/2}) $$
+      Let $U = A_{H}B_{H}$, $V = A_{L}B_{L}$, $W(x) = (A_L + A_H)(B_L + B_H)$, we have
+      $$ A(x)B(x) = U x^n + (W-U-V)x^{n/2} + V$$
+      By applying the equation recursively, we can compute $A(x)B(x)$. The recurrence of running time is
+      $$ f(n) = 3f(n/2) + O(n)$$
+      By the master theorem, $f(n) = O(n^{\log_2 3})$.
+      In the second algorithm, for polynomial $A$, define
+      \begin{align*}
+        A^{[0]}(x) &= a_0 + a_2 x + a_4 x^2 + \cdots + a_{n-2} x^{n/2 - 1} \\
+        A^{[1]}(x) &= a_1 + a_3 x + a_5 x^2 + \cdots + a_{n-1} x^{n/2 - 1}
+      \end{align*}
+      then we have
+      $$ A(x)B(x) = (A^{[0]}(x^2) + xA^{[1]}(x^2))(B^{[0]}(x^2) + xB^{[1]}(x^2)) $$
+      Let $U = A^{[0]}(x^2)B^{[0]}(x^2)$, $V = A^{[1]}(x^2)B^{[1]}(x^2)$, $W = (A^{[0]}(x^2) + A^{[1]}(x^2))(B^{[0]}(x^2) + B^{[1]}(x^2))$, we have
+      $$ A(x)B(x) = U x^2 + (W-U-V)x + V $$
+      Similarly, we can compute $A(x)B(x)$ by recursively applying this equation, and the running time is still $O(n^{\log_2 3})$.
+    \item Two $n$-bit integers can be added or subtracted in $O(n)$ time, using add with carry (or subtract with borrow) from lower bit to higher bit. To avoid discussion of trivial details, let $n$ be some power of 2, by padding with zeros. Let $A$, $B$ be two $n$-bit integers, and $A_L$, $B_L$ (or $A_H$, $B_H$) be their lower halves (or higher halves). Let $U = A_LB_L$, $V = A_HB_H$, $W = (A_L+A_H)(B_L+B_H)$, then
+        $$ AB = U 2^n + (W - U - V) 2^{n/2} + V $$
+        The product consists three parts, corresponding to $1$ to $n/2-1$, $n/2$ to $n-1$, $n$ to $2n-1$ bits, respectively, yet some parts may consist more than $n/2$ bits. We only have to add the bits higher than $n/2$-th bit to the next part, which takes only $O(n)$ time. The total running time of the divide-and-conquer algorithm is $O(n^{\log_2 3})$.
+  \end{enumerate}
+
+\end{document}
