@@ -87,7 +87,7 @@
     &= 0
   \end{align*}
   Likewise $(1/(a+1)-1)*a = 0$. \par
-  Therefore, $(S, *)$ is a group. Also, it is easy to verify that $a * b = b * a$, hence it is also abelian.
+  Therefore, $(S, *)$ is a group. Also, it is easy to verify that $a * b = b * a$, hence it is abelian.
 
   \section{[TJ] Exercise 3-17}
   \begin{align*}
@@ -183,7 +183,7 @@
   \section{[TJ] Exercise 5-5}
   The subgroups of $S_4$ are
   \begin{itemize}
-    \item trivial subgroups: $\{\text{id}\}$;
+    \item the trivial group: $\{\text{id}\}$;
     \item subgroups of order 2: $\{\text{id}, (12)\}$, $\{\text{id}, (13)\}$, $\{\text{id}, (14)\}$, $\{\text{id}, (23)\}$, $\{\text{id}, (24)\}$, $\{\text{id}, (34)\}$, $\{\text{id}, (12)(34)\}$, $\{\text{id}, (13)(24)\}$, $\{\text{id}, (14)(23)\}$;
     \item cyclic subgroups of order 3: $\langle (123) \rangle$, $\langle (124) \rangle$, $\langle (134) \rangle$ and $\langle (234) \rangle$;
     \item cyclic subgroups of order 4: $\langle (1234) \rangle$, $\langle (1324) \rangle$, $\langle (1243) \rangle$;
@@ -206,8 +206,8 @@
   \section{[TJ] Exercise 5-16}
   Let 1, 2, 3, 4 denote the four vertices of a tetrahedron, respectively. Then all its rigid motions can be represented as a permutation of 1, 2, 3, 4, and they are:
   \begin{itemize}
-    \item eight $60^\circ$ rotation operations: (123), (321), (124), (421), (134), (431), (234), (432);
-    \item three $120^\circ$ rotation operations: (12)(34), (13)(24), (14)(23);
+    \item eight $120^\circ$ rotation operations: (123), (321), (124), (421), (134), (431), (234), (432);
+    \item three $180^\circ$ rotation operations: (12)(34), (13)(24), (14)(23);
     \item and, the identity: id.
   \end{itemize}
   Note that these permutations are exactly all even permutations on 4 letters, so it is the same as $A_4$.
@@ -221,15 +221,15 @@
   Therefore, $\lambda_g$ is one-to-one and onto, so $\lambda_g$ is a permutation of $G$.
 
   \section{[TJ] Exercise 5-29}
-  The centers of $D_8$, $D_10$ are $\{\text{id}, i\}$, where $i$ denotes inversion through the center of the polygon. \par
+  The centers of $D_8$, $D_{10}$ are $\{\text{id}, i\}$, where $i$ denotes inversion through the center of the polygon, or, equivalently, $180^\circ$ rotation. \par
   For arbitrary $n$, the center of $D_n$ is $\{\text{id}\}$ if $n$ is odd, or $\{\text{id}, i\}$ is even. Note, that only when $n$ is even $D_n$ contains $i$. \par
   It is obvious that id and $i$ are central. For any element other than id, it is either a reflection or a rotation. Let $\rho$ be any rotation and $\mu$ be any reflection. It is easy to verify that $\rho \mu = \mu \rho^{-1}$. Note that $\rho^{-1} = \rho$ if and only if $\rho = i$. So any element other than id and $i$ is not central.
 
   \section{[TJ] Exercise 6-11}
   (a) $\rightarrow$ (b): for every $h \in H$, there exists $h' \in H$, such that $g_1h = g_2h'$. Hence we have $hg_2^{-1} = h(g_1hh'^{-1})^{-1} = (hh'^{-1}h^{-1})g_1^{-1} \in Hg_1^{-1}$, so $Hg_2^{-1} \subseteq Hg_1^{-1}$. Likewise we have $Hg_1^{-1} \subseteq Hg_2^{-1}$, so $Hg_1^{-1} = Hg_2^{-1}$. \par
   (b) $\rightarrow$ (a): for every $h \in H$, there exists $h' \in H$, such that $hg_1^{-1} = h'g_2^{-1}$. Hence we have $g_2h = (g_1h^{-1}h')h = g_1(h^{-1}h'h) \in g_1H $, so $g_2H \subseteq g_1H$. Likewise $g_1H \subseteq g_2H$, so $g_1H = g_2H$. \par
-  (a) $\rightarrow$ (c) is immediate. (also we have $g_2H \subseteq g_1H$) \par
-  (c) $\rightarrow$ (d): $g_2H \subseteq g_1H$, and $g_2 = g_2e$ is an element of the former one, so it is also an element of the latter one, i.e. $g_2 \in g_1H$. \par
+  (a) $\rightarrow$ (c) is immediate. \par
+  (c) $\rightarrow$ (d): since $g_1H \subseteq g_2H$ and $g_1 = g_1 e \in g_1 H$, we have $g_1 \in g_2H$, so there exists $h \in H$, such that $g_1 = g_2 h$, i.e. $g_2 = g_1 h^{-1}$, so $g_2 \in g_1 H$. \par
   (d) $\rightarrow$ (e): since $g_2 \in g_1 H$, there exists $h \in H$, such that $g_2 = g_1h$, so $g_1^{-1}g_2 = h \in H$. \par
   (e) $\rightarrow$ (a): for every $h \in H$, we have
   $ g_1h = g_1(g_1^{-1}g_2)(g_1^{-1}g_2)^{-1}h = g_2((g _1^{-1}g_2)^{-1}h) \in g_2H$ and $g_2h = g_2(g_1^{-1}g_2)^{-1}(g_1^{-1}g_2)h = g_1(g_1^{-1}g_2h) \in g_1 H$, so every element of $g_1 H$ is an element of $g_2H$, and vice versa. Hence $g_1H = g_2H$. \par
@@ -239,12 +239,12 @@
   Consider the left coset $gH$ and right coset $Hg$ for arbitrary $g \in G$. For every $h \in H$, $gh = gh(g^{-1}g) = (ghg^{-1})g \in Hg$, which means $gH \subseteq Hg$; $hg = (gg^{-1})hg = g(g^{-1}h(g^{-1})^{-1}) \in gH$, which means $Hg \subseteq gH$, so $gH = Hg$. Therefore, the right cosets are identical to left cosets.
 
   \section{[TJ] Exercise 6-16}
-  Since $G$ is finite, every element of $G$ has finite order. Let's consider the elements whose orders are not 2. $G$ contains exactly one element of order 1, the identity. For every $a \in G$ that the order or $a$ are greater than 2, $a^{-1}$ is also an element whose order is greater than 2. Furthermore, $a^{-1} \neq a$, for otherwise $a^2 = 1$, which leads to contradiction. This means that the elements whose orders are greater than 2 can be paired up. Therefore, the number of elements of order 2 is odd. \par
+  Since $G$ is finite, every element of $G$ has finite order. Let's consider the elements whose orders are not 2. $G$ contains exactly one element of order 1, the identity. For every $a \in G$ that the order or $a$ are greater than 2, $a^{-1}$ is also an element whose order is greater than 2. Furthermore, $a^{-1} \neq a$, for otherwise $a^2 = 1$, which leads to contradiction. This means that the elements whose orders are greater than 2 can be paired up. Also, we have $|G| = 2n$. Therefore, the number of elements of order 2 is odd. \par
   The conclusion above shows that $G$ contains at least one element of order 2. The cyclic graph generated by such an element is a subgroup of $G$ of order 2.
 
   \section{[TJ] Exercise 6-21}
   For arbitrary element $a \in G$ ($a \neq e$), the order of $a$ is $p^k$, where $0 < k \leq n$. Then, $a^{p^{k-1}}$ is an element of order $p$, which means $\langle a^{p^{k-1}} \rangle$ is a proper subgroup of order $p$. \par
-  If $n \geq 3$, it is true that $G$ must have proper subgroup of order $p^2$. If there exists some element $a$ of order $p^k$, by first Sylow theorem.
+  If $n \geq 3$, it is true that $G$ must have proper subgroup of order $p^2$, by first Sylow theorem.
 
   \section{[TJ] Exercise 9-6}
   Suppose $f: \{{\omega_n}^i\} \rightarrow \mathbb{Z}_n$ is defined as
