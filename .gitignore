@@ -80,3 +80,16 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# LaTeX temps
+*.aux
+*.bbl
+*.blg
+*.log
+*.synctex.gz
+*.bak
+*.sav
+*.sty
+*.nav
+*.snm
+*.toc
