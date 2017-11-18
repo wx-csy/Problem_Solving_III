@@ -244,7 +244,17 @@
 
   \section{[TJ] Exercise 6-21}
   For arbitrary element $a \in G$ ($a \neq e$), the order of $a$ is $p^k$, where $0 < k \leq n$. Then, $a^{p^{k-1}}$ is an element of order $p$, which means $\langle a^{p^{k-1}} \rangle$ is a proper subgroup of order $p$. \par
-  If $n \geq 3$, it is true that $G$ must have proper subgroup of order $p^2$, by first Sylow theorem.
+  If $n \geq 3$, it is true that $G$ must have proper subgroup of order $p^2$. If $G$ contains element of order $p^k$ with $k \geq 2$, the proof is done. So we only have to consider the case that the orders of all non-identity elements are $p$. To prove this statement, let us introduce some concepts. In group $G$,
+  \begin{itemize}
+    \item \emph{Conjugacy}: if $y g = g x$, then $x$ and $y$ are said to be conjugate, and one is the other's conjugate. It is easy to verify that conjugacy is an equivalence relation, and let $CI(x)$ denote the equivalence class that contains $x$, i.e. the set of all conjugates of $x$.
+    \item \emph{Centralizer}: for $x \in G$, the set $C(x) = \{g \in G : xg = gx \}$ is called the centralizer of $x$. It is easy to verify that $C(x)$ is a subgroup of $G$.
+    \item \emph{Central element}: if $x \in G$ commutates with all elements, i.e. $xg = gx$ for all $g \in G$, then $x$ is called a central element of $S$. It is immediate that $x$ is a central of $G$ if and only if $x$ itself is the only conjugate of $x$.
+    \item \emph{Center}: the set of all central elements of $G$ is called the center of $G$ and denoted as $Z(G)$.
+  \end{itemize}
+  The conjugacy is an equivalence relation means that all equivalence classes partitions $G$. Since all equivalence classes of size 1 contains only the central elements, we replace these classes with $Z(G)$. Hence we obtain:
+  $$ |G| = |Z(G)| + \sum |CI(x_i)| $$
+  where $CI(x_i)$ are equivalence classes with more than one elements. For every $CI(x_i)$, consider every two conjugate elements $x, y \in CI(x_i)$, which satisfies $ y g = g x $. If there exists $a$, such that $ya = ax$, then $x(g^{-1}a) = g^{-1}gxg^{-1}a = g^{-1}ygg^{-1}a = g^{-1}ya = (g^{-1}a)x$, i.e. $g^{-1}a \in C(x)$, or equivalently $a \in gC(x)$. Also, we can prove for every $b \in gC(x)$, $g^{-1}b \in C(x)$, $yb = ygg^{-1}b = gxg^{-1}b = gg^{-1}b = bx$. So the number of elements in $CI(x_i)$ equals to the number of left cosets of $C(x_i)$, i.e. $|CI(x_i)| = |G|/|C(x_i)| = p^i, i \geq 1$. \par
+Since $|G|$ and $\sum |CI(x_i)|$ are multiples of $p$, $|Z(G)|$ is also. This means $Z(G)$ contains non-identity elements, and let $a$ denote one of them. Let $b$ be any element that is not in $\langle a \rangle$, then $\{x : x = a^m b^n, m,n \in \mathbb{Z}\}$ is an abelian subgroup of $G$ with $p^2$ elements, which completes the proof.
 
   \section{[TJ] Exercise 9-6}
   Suppose $f: \{{\omega_n}^i\} \rightarrow \mathbb{Z}_n$ is defined as

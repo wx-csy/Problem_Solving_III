@@ -45,7 +45,7 @@
   \end{align*}
 
   \section{[TC] Problem 30.1-4}
-  We can get one linear equation by substituting one point into the polynomial, and we can get less than $n$ linear equations in total. However, a polynomial of degree-bound $n$ has $n$ coefficients, and by linear algebra we know the equations have more than one solutions. Hence, the polynomial can not be uniquely determined, which means $n$ distinct point-value pairs are necessary.
+  We can get one linear equation by substituting one point into the polynomial, and we can get less than $n$ linear equations in total. However, a polynomial of degree-bound $n$ has $n$ coefficients, and by linear algebra we know the equations have more than one solution. Hence, the polynomial can not be uniquely determined, which means $n$ distinct point-value pairs are necessary.
 
   \section{[TC] Problem 30.1-5}
   We can precalculate $P(x) = \prod_j (x-x_j)$ in $O(n^2)$ time, since multiplying each term can be regarded as adding two polynomials, which takes $O(n)$ time, and there are $n$ terms in total. Then, we compute each term of the summation. For the numerator, $\prod_{j \neq k} (x - x_j) = P(x) / (x - x_k)$, which can be calculated in $O(n)$ time by using the method mentioned in Problem 30.1-2. The denominator is just the product of $n$ numbers, which can be easily calculated in $O(n)$ time. Hence all these $n$ terms can be calculated in $O(n^2)$ time. Finally, we sum up all the terms in the summation. Each term is a polynomial of degree-bound $n$ and there are $n$ terms in all, the summation can be done in $O(n^2)$ time. Therefore, the interpolation can be done in $O(n^2)$ time using equation (30.5).
