@@ -1,13 +1,37 @@
 \documentclass[a4paper,11pt,twocolumn]{article}
 \usepackage{fancyhdr}
 \usepackage{enumerate}
-\usepackage{times}
+\usepackage{pifont}
+\usepackage{fontspec, xunicode, xltxtra}
 \usepackage{mathptmx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\usepackage{listings}
+\makeatletter
+\lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
+\@empty\z@\@empty
+\makeatother
+\usepackage{color}
+\newfontfamily\mono{Consolas}
+\newfontfamily\timesnew{Times New Roman}
+\lstset {
+  basicstyle = \small\mono,
+  columns = fixed,
+  extendedchars=false,
+  %language = C++,
+  tabsize = 4,
+  frame = single,
+  breaklines = true,
+  breakindent = 1.1em,
+  showstringspaces=false,
+  stringstyle=\mono,
+  numberstyle=\footnotesize\mono,
+  basewidth={0.5em, 0.4em},
+}
 
 \setlength{\columnsep}{7mm}
 
@@ -20,8 +44,10 @@
 \cfoot{\thepage}
 \rfoot{}
 
+\newcommand{\lcm}{\mathop{\mathrm{lcm}}}
 \allowdisplaybreaks[4]
 %\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\setmainfont{Times New Roman}
 \begin{document}
   \title{Problem Solving: Homework \homeworkno}
   \author{Name: Chen Shaoyuan \and Student ID: 161240004}
@@ -135,7 +161,7 @@
             &= 1204 \cdot 1739 + (-211) \cdot 9923
         \end{align*}
         $$ \gcd(1739, 9923) = 3 = 1204 \cdot 1739 + (-211) \cdot 9923 $$
-    \item 
+    \item
         \begin{align*}
           -4357 &= 3754 \cdot (-2) + 3151 \\
           3754 &= 3151 \cdot 1 + 603 \\
@@ -162,12 +188,12 @@
         \end{align*}
         $$ \gcd(-4357, 3754) = 1 = 1463 \cdot (-4357) + 1698 \cdot 3754 $$
   \end{enumerate}
-  
+
   \section{[TJ] Exercise 2-16}
   Suppose that $a$ and $b$ are not relatively prime. Let $g = \gcd(a, b) > 1$, then $a = pg$, $b = qg$, where $p$ and $q$ are integers. Hence $pgr + qgs = g(pr + qs) = 1$. The lhs of the equation is a multiple of $g$, while the rhs is not, which leads to contradiction. Therefore $a$ and $b$ are relatively prime.
 
   \section{[TJ] Exercise 2-19}
-  Let $xy = q^2$. By the Fundamental Theorem of Arithmetic, $x, y$ can be written as 
+  Let $xy = q^2$. By the Fundamental Theorem of Arithmetic, $x, y$ can be written as
   \begin{align*}
     x &= \prod_{i=1}^{k} {p_i}^{m_i},  &  y &= \prod_{i=1}^{k} {p_i}^{n_i}, & q &= \prod_{i=1}^{k} {p_i}^{s_i}
   \end{align*}
@@ -184,13 +210,13 @@
              & 2^q + 2^{q+1} + \cdots + 2^{2q-1} + \\
              & \cdots \\
              & 2^{q(r-1)} + 2^{q(r-1)+1} + \cdots + 2^{qr-1} \\
-            =& (1 + 2^q + \cdots + 2^{q(r-1)}) (1 + 2 + \cdots + 2^{q-1}) 
+            =& (1 + 2^q + \cdots + 2^{q(r-1)}) (1 + 2 + \cdots + 2^{q-1})
   \end{align*}
   is not a prime, which leads to contradiction.
-  
+
   \section{[TJ] Exercise 2-29}
   Assume, to the contrary that there are finitely many primes of the form $6n+5$, and let $p_1, p_2, \cdots, p_k$ denote them. Every odd prime is either of the form $6n+1$ or $6n+5$. Consider the number $P = p_1p_2 \cdots p_k + 6$, which is congruent to 5 modulo 6. $P$ is not a multiple of any $p_i$ because $P$ is congruent to $6$ modulo $p_i$, while $6$ can't be a multiple of $p_i$. This means, $P$ is the product of several primes of the form $6n+1$, but this means that $P$ is congruent to $1$ modulo 6, which leads to contradiction. Therefore, there are an infinite number of primes of the form $6n+5$.
-  
+
   \section{[TJ] Exercise 2-30}
   Assume, to the contrary that there are finitely many primes of the form $4n-1$, and let $p_1 = 3, p_2, \cdots, p_k$ denote them. Every odd prime is either of the form $4n+1$ or $4n-1$. Consider the number $P = 4p_2p_3 \cdots p_k + 3$, which is congruent to 3 modulo 4. $P$ is not a multiple of any $p_i$ because $P$ is congruent to 3 if $i \neq 1$ or $4p_2p_3 \cdots p_k$ if $i = 1$, which can't be a multiple of $p_i$. This means, $P$ is the product of several primes of the form $4n+1$, but this means that $P$ is congruent to 1 modulo 4, which leads to contradiction. Therefore, there are an infinite number of primes of the form $4n-1$.
 
@@ -201,4 +227,47 @@
   \end{align*}
   where $P_i$ is the $i$th prime, $m_i, n_i$ are nonnegative integers. Since $p^2 = 2q^2$, we have $2m_1 = 2n_1 + 1$, which leads to contradiction. Hence there do not exist such integers $p, q$. \par
   By rewriting $p^2 = 2q^2$, we know that $\sqrt{2} = p/q$. However, we have proved that there do not exists such integers $p, q$, so $\sqrt{2}$ is not a rational number.
+
+  \section{[TJ] Programming Exercise 2-1}
+  The prime factors of 120 are 2, 3, 5. By crossing out the multiples of 2, 3, 5, we obtain the integers that are relatively prime to 120. The ones that are less than 120 are listed below.
+  \begin{tabbing}
+    1111 \= 1111 \= 1111 \= 1111 \= 1111 \= 1111 \= 1111 \= 1111 \= 1111 \= 1111 \kill
+    % \> for next tab, \\ for new line...
+    2 \> 3 \> 5 \> 7 \> 11 \> 13 \> 17 \> 19 \> 23 \> 29 \\
+    31 \> 37 \> 43 \> 47 \> 49 \> 53 \> 59 \> 61 \> 67 \> 71 \\
+    73 \> 77 \> 79 \> 83 \> 89 \> 91 \> 97 \> 101 \> 103 \> 107 \\
+    109 \> 113 \> 119
+  \end{tabbing}
+  Any one of these plus a multiple of 120 is also a number relatively prime to 120. \par
+  The computer program that computes all primes less than $N$ is shown below. 
+  \lstinputlisting[language=c]{src/sieve.c}
+  
+  \section{[TJ] Programming Exercise 2-3}
+  \lstinputlisting[language=c]{src/exgcd.c}
+
+  \section{[CS] Exercise 2.2-2}
+  Yes. It is 133.
+
+  \section{[CS] Exercise 2.2-4}
+  There is one element, $a = 24$, such that $a \cdot_{31} 22 = 1$. \par
+  There is no element such that $a \cdot_{10} 2 = 1$.
+
+  \section{[CS] Exercise 2.2-6}
+  All possible common divisors are $1$ and $-1$.
+
+  \section{[CS] Exercise 2.2-8}
+  $\gcd(q, k) = \gcd(q, k-jq) = \gcd(r, q)$.
+
+  \section{[CS] Exercise 2.2-15}
+  $\gcd(j, k)$ is a factor of $\gcd(r, k)$.
+
+  \section{[CS] Exercise 2.2-16}
+  We can take $q' = -q-1$, such that $m = q'n + r$. \par
+  If $m \geq 0$, it is identical to Theorem 2.1. If $m < 0$, by Theorem 2.12, there exists unique integers $q, r (0 \leq r < n)$, such that $-m = nq + r$. If $r = 0$, we take $q' = q$ and $r' = 0$, such that $m = nq' + r'$, and such choice is unique. If $r \neq 0$, we take $q' =  - q - 1$, $r' = n - r$, such that $m = nq' + r'$. Here, the choice is also unique, because $q = -q' - 1$, $r = n - r'$, which means two different pairs of $q', r'$ lead to two different pairs of $q, r$, which contradicts Theorem 2.12. Hence we've extended Theorem 2.12 to Theorem 2.1.
+
+  \section{[CS] Exercise 2.2-17}
+  Since $F_i = F_{i-1} + F_{i-2}$ for $i \geq 3$, the algorithm performs Euclid's division on $(F_{i+1}, F_{i})$, $(F_{i}, F_{i-1})$, $\cdots$, $(F_2, F_1)$, and the GCD is $1$. And, $1 = 1 \cdot 2 + (-1) \cdot 1 = 2 \cdot 2 - 1 \cdot 3 = 2 \cdot 5 - 3 \cdot 3 = \cdots = (-1) ^ i F_{i-1} F_{i+1} - (-1)^i F_i F_i$. So $\gcd(F_{i+1}, F_i) = 1 = (-1)^i F_{i-1} F_{i+1} + (-1)^{i+1} F_i F_i$.
+
+  \section{[CS] Exercise 2.2-19}
+  $ \gcd(a, b) \lcm(a, b) = |ab| $.
 \end{document}
