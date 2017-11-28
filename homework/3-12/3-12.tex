@@ -218,7 +218,7 @@
   Assume, to the contrary that there are finitely many primes of the form $6n+5$, and let $p_1, p_2, \cdots, p_k$ denote them. Every odd prime is either of the form $6n+1$ or $6n+5$. Consider the number $P = p_1p_2 \cdots p_k + 6$, which is congruent to 5 modulo 6. $P$ is not a multiple of any $p_i$ because $P$ is congruent to $6$ modulo $p_i$, while $6$ can't be a multiple of $p_i$. This means, $P$ is the product of several primes of the form $6n+1$, but this means that $P$ is congruent to $1$ modulo 6, which leads to contradiction. Therefore, there are an infinite number of primes of the form $6n+5$.
 
   \section{[TJ] Exercise 2-30}
-  Assume, to the contrary that there are finitely many primes of the form $4n-1$, and let $p_1 = 3, p_2, \cdots, p_k$ denote them. Every odd prime is either of the form $4n+1$ or $4n-1$. Consider the number $P = 4p_2p_3 \cdots p_k + 3$, which is congruent to 3 modulo 4. $P$ is not a multiple of any $p_i$ because $P$ is congruent to 3 if $i \neq 1$ or $4p_2p_3 \cdots p_k$ if $i = 1$, which can't be a multiple of $p_i$. This means, $P$ is the product of several primes of the form $4n+1$, but this means that $P$ is congruent to 1 modulo 4, which leads to contradiction. Therefore, there are an infinite number of primes of the form $4n-1$.
+  Assume, to the contrary that there are finitely many primes of the form $4n-1$, and let $p_1, p_2, \cdots, p_k$ denote them. Every odd prime is either of the form $4n+1$ or $4n-1$. Consider the number $P = 4p_1p_2p_3 \cdots p_k - 1$, which is congruent to -1 modulo 4. If $P$ a multiple of any $p_i$, then $P + 1$ is also a multiple of $p_i$, this means 1 is a multiple of $p_i$ which is impossible. Hence, $P$ is the product of several primes of the form $4n+1$, but this means that $P$ is congruent to 1 modulo 4, which leads to contradiction. Therefore, there are an infinite number of primes of the form $4n-1$.
 
   \section{[TJ] Exercise 2-30}
   Suppose to the contrary that there exists integers $p, q$ such that $p^2 = 2q^2$. By the Fundamental Theorem of arithmetic, $p^2$ and $q^2$ can be written as
@@ -239,9 +239,9 @@
     109 \> 113 \> 119
   \end{tabbing}
   Any one of these plus a multiple of 120 is also a number relatively prime to 120. \par
-  The computer program that computes all primes less than $N$ is shown below. 
+  The computer program that computes all primes less than $N$ is shown below.
   \lstinputlisting[language=c]{src/sieve.c}
-  
+
   \section{[TJ] Programming Exercise 2-3}
   \lstinputlisting[language=c]{src/exgcd.c}
 
@@ -269,5 +269,5 @@
   Since $F_i = F_{i-1} + F_{i-2}$ for $i \geq 3$, the algorithm performs Euclid's division on $(F_{i+1}, F_{i})$, $(F_{i}, F_{i-1})$, $\cdots$, $(F_2, F_1)$, and the GCD is $1$. And, $1 = 1 \cdot 2 + (-1) \cdot 1 = 2 \cdot 2 - 1 \cdot 3 = 2 \cdot 5 - 3 \cdot 3 = \cdots = (-1) ^ i F_{i-1} F_{i+1} - (-1)^i F_i F_i$. So $\gcd(F_{i+1}, F_i) = 1 = (-1)^i F_{i-1} F_{i+1} + (-1)^{i+1} F_i F_i$.
 
   \section{[CS] Exercise 2.2-19}
-  $ \gcd(a, b) \lcm(a, b) = |ab| $.
+  $ \lcm(a, b) = ab/\gcd(a, b)  $.
 \end{document}
