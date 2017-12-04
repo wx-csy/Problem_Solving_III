@@ -1,0 +1,130 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{clrscode3e}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.14}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\allowdisplaybreaks[4]
+\renewcommand{\labelenumi}{\textbf{\emph{\alph{enumi}}.}}
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[TJ] Problem 7.3}
+  (To be done)
+
+  \section{[TJ] Problem 7.7}
+  \begin{enumerate}[(a)]
+    \item $y = x^E \bmod n = 31^{629} \bmod 3551 = 2791$
+    \item $y = x^E \bmod n = 23^{47} \bmod 2257 = 769$
+    \item
+      \begin{align*}
+        y_1 &= x_1^E \bmod n = 14^{13251} \bmod 120979 = 112135 \\
+        y_2 &= x_2^E \bmod n = 23^{13251} \bmod 120979 = 25032 \\
+        y_3 &= x_3^E \bmod n = 71^{13251} \bmod 120979 = 442 \\
+        y &= (y_1, y_2, y_3) = (112135, 25032, 442)
+      \end{align*}
+    \item
+      \begin{align*}
+        y_1 &= x_1^E \bmod n = 23^{781} \bmod 45629 = 4438 \\
+        y_2 &= x_2^E \bmod n = 15^{781} \bmod 45629 = 16332 \\
+        y_3 &= x_3^E \bmod n = 61^{781} \bmod 45629 = 31594 \\
+        y &= (y_1, y_2, y_3) = (4438, 16332, 31594)
+      \end{align*}
+  \end{enumerate}
+
+  \section{[TJ] Problem 7.9}
+  \begin{enumerate}[(a)]
+    \item $ x = y^D \bmod n = 2791^{1997} \bmod 3551 = 31$
+    \item $ x = y^D \bmod n = 34^{81} \bmod 5893 = 2014$
+    \item $ x = y^D \bmod n = 112135^{27331} \bmod 120979 = 14$
+    \item $ x = y^D \bmod n = 129381^{671} \bmod 79403 = 21712$
+  \end{enumerate}
+
+  \section{[TJ] Problem 7.12}
+  Note that the equation $X^E - X \equiv 0 \pmod n$ is equivalent to the equation system
+$$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1)\\ X^E - X \equiv 0 \pmod q \qquad (2) \end{cases} $$
+  because $n = pq$ where $p$ and $q$ are distinct primes. Every pair of solutions of equation (1) and (2) corresponds to a solution to the original equation, by the Chinese remainder theorem. So, the number of solutions to the original equation is the product of the numbers of solutions to equation (1) and (2). \par
+  Without loss of generality, let's consider equation (1). Since $p$ is a prime, it is either the case that $X = 0$ or $X^{E-1} \equiv 1 \pmod p$. Let $X = g_p^t \neq 0$ where $g$ is a primitive root modulo $p$. By discrete logarithm theorem, the second case is equivalent to
+  $$t(E-1) \equiv 0 \pmod{p-1}.$$
+  this equation has exactly $\gcd(E-1, p-1)$ solutions. Hence, the equation (1) has $1 + \gcd(E-1, p-1)$ solutions, and they are $0$ and $g_p^{\frac{k(p-1)}{\gcd(E-1, p-1)}}$, where $k$ is an integer. Likewise the equation (2) has $1 + \gcd(E-1, q-1)$ solutions, and they are $0$ and $g_q^{\frac{k(q-1)}{\gcd(E-1, q-1)}}$. Let $X_1$, $X_2$ denote one pair of solutions to equations (1) and (2), then $X = X_1 q q^{-1}_p + X_2 p p^{-1}_q$ is a solution to the original equation, by the Chinese remainder theorem. There are $(1 + \gcd(E-1, p-1))(1 + \gcd(E-1, q-1))$ such solutions in all. \par
+  This might be a potential problem in the RSA cryptosystem. If $(1 + \gcd(E-1, p-1))(1 + \gcd(E-1, q-1))$ is large, then the probability that the plaintext contains a fixed point is high. Since RSA modulus is large (usually up to thousands digits), the attacker may find such fixed point (which remains unchanged after encryption) very easily. However, we can avoid such problem by carefully choosing $E$ such that $\gcd(E-1, p-1)$ and $\gcd(E-1, q-1)$ are small.
+
+  \section{[TC] Problem 31.7-1}
+  $$ d = e^{-1} \bmod (p-1)(q-1) = 3^{-1} \bmod 280 = 187 $$
+  $$ N = M^{3} \bmod n = 100^3 \bmod 319 = 254 $$
+  
+  \section{[TC] Problem 31.7-2}
+  Since $ed \equiv 1 \pmod{(p-1)(q-1)}$, we have $ed = k(p-1)(q-1) - 1$. Since $e = 3$ and $0 < d < \phi(n)$, we have $k = 1$ or $k = 2$. For $k = 1$, let $m = n + 1 - (1+ed)/k = p + q$, which can be calculated in polynomial time. Now, we have $m = p + q$, $n = pq$, and we want to solve for $p$ and $q$. We can rewrite these equations as
+  $$f(p) = p^2 - mp - n = 0$$
+  Note that $f(p)$ is a monotonic function on $[0, m/2]$. This enables us to apply binary search to find the zero point of $f(p)$, and the running time is $O(T(\log n) \log m)$, where $T(\alpha)$ is the time of computing $f(x)$ for given $\alpha$-bit integer $x$, or equivalently, the running time of multiplying two $\alpha$-bit integers, which is polynomial. If no solution is found, let $k = 2$ and try again. The total running time is polynomial in the number of bits in $n$.
+
+  \section{[TC] Problem 31.2}
+  \begin{enumerate}
+    \item The ``paper and pencil'' algorithm for division can be decomposed to the following steps:
+    \begin{enumerate}[Step 1]
+      \item Left shift $b$ until the length of $b$ is greater than or equal to $a$.
+      \item Goto Step 5.
+      \item Compare $b$ and $a$. If $b$ is larger than or equal to $a$, subtract $a$ from $b$ and append bit `1' to $q$ as the least significant bit; otherwise, append bit `0' to $q$.
+      \item Right shift $a$ by 1 bit.
+      \item If the length of $a$ is greater than its original length, goto Step 3.
+      \item Let $r$ be $b$.
+    \end{enumerate}
+    Step 1, 2, 4, 5 can be done in $O(1)$ time. Step 3 can be done in $O(\lg b)$ bit operations, and this step will be executed for $O(\lg q)$ times. Step 6 can be done in $O(\lg b)$ operations. So this method requires $O((1+\lg q) \lg b)$ bit operations.
+    \item The reduction is to calculate $a \bmod b$. By the conclusion above, such calculation can be done in at most $c(1 + \log \lfloor a / b \rfloor)(\log b)$ bit operations, where
+        \begin{equation*}
+        \begin{split}
+          c(\mu(a, b) - \mu(b, a \bmod b)) &= c((1+\lg a)(1+\lg b) - (1+\lg b)(1+\lg(a \bmod b)) \\
+           & \geq c((1+\lg a)(1+\lg b) - (1+\lg b)(1+\lg b) \\
+           & \geq c(1 + \log \lfloor a / b \rfloor)(\log b)
+        \end{split}
+        \end{equation*}
+      So it can be done in at most $c(\mu(a, b) - \mu(b, a \bmod b))$ bit operations.
+    \item The \proc{Euclid} requires at most
+      $$ c \mu(a, b) - c \mu (b, a \bmod b) + c \mu(b, a \bmod b) - c \mu(a \bmod b, b \bmod (a \bmod b)) + \cdots < c\mu(a, b) = O(\mu (a, b)) $$
+      bit operations. Since $O(\mu(a, b)) = O(\lg a, \lg b)$ for $a, b > 1$, it requires $O(\beta^2)$ bit operations when applied to two $\beta$-bits inputs。    
+  \end{enumerate}
+  
+  \section{[TC] Problem 31.3}
+  \begin{enumerate}
+    \item The running time satisfies the following recurrence
+    $$ f(n) = f(n-1) + f(n-2) + O(1) $$
+    Hence, $f(n) = \Omega(F_n)$. Also, it is easy to verify that $f(n) = O(3^n)$. We know that $F_n$ grows exponentially in $n$, so the running time is exponential in $n$.
+    \item We compute $F_i$ from $i = 2$ to $n$. For every calculated $F_i$, we store its value in the memory. Hence, we do not have to recomputer $F_{n-1}$ and $F_{n-2}$. The running time is therefore $O(n)$.
+    \item Note that
+    \begin{equation*}
+      \begin{pmatrix} F_n \\ F_{n+1} \end{pmatrix} =
+      \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} F_{n-1} \\ F_{n} \end{pmatrix}
+    \end{equation*}
+    So we have
+    \begin{equation*}
+      \begin{pmatrix} F_n \\ F_{n+1} \end{pmatrix} =
+      \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix}^n \begin{pmatrix} F_{0} \\ F_{1} \end{pmatrix}
+    \end{equation*}
+    We can compute $\begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix}^n $ by repeated squaring in $O(\log n)$ time. Hence the total running time is $O(\log n)$.
+    \item For the first method, the recurrence should be changed to
+    $$ f_1(n) = f_1(n-1) + f_1(n-2) + O(\log F_n) = f_1(n-1) + f_1(n-2) + O(n) $$
+    and we can still verify easily that $f_1(n) = O(3^n)$, so the running time of the first method is still exponential in $n$. \par
+    For the second method, the running time is 
+    $$ f_2(n) = O(\sum_{i = 1}^{n} \log(F_i)) = O(\sum_{i = 1}^n i) = O(n^2) $$ 
+    For the third method, the running time is
+    $$ f_3(n) = O(\sum_{i = 1}^{\log_2 n} \log^2(F_{2^i})) = O(\sum_{i = 1}^{\log_2 n} 4^i) = O(n^2) $$
+  \end{enumerate}
+\end{document}
