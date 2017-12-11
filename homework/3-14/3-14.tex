@@ -28,7 +28,41 @@
   \maketitle
 
   \section{[TJ] Problem 7.3}
-  (To be done)
+  The ciphertext is seperated into 4 ten-letter groups, with an additional four-letter tail. Since it is a monoalphabetic code, we try frequency analysis. The frequencies of all letters in ciphertext is shown below.
+
+\begin{table}[h]
+  \centering
+   \begin{tabular}{c|ccccccccccccc}
+     \hline
+     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     Letter & A & B & C & D & E & F & G & H & I & J & K & L & M \\
+     \# & 2 & 2 & 2 & 1 & 1 & 9 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ \hline
+     Letter & N & O & P & Q & R & S & T & U & V & W & X & Y & Z \\
+     \# & 2 & 1 & 1 & 4 & 1 & 2 & 1 & 1 & 0 & 4 & 1 & 1 & 1 \\
+     \hline
+   \end{tabular}
+\end{table}
+
+    Note that the letter `F' in ciphertext appears 9 times, or 20.5\%, which is much higher than the most common letter, `E', in English, which only occurs about 12\% of the time. Also, the average English word length is about 5, so we guess that `F' is just used to separate words. However, only the last one of consecutive `F's should be considered as word separator. Hence, the ciphertext can be separated as
+    \begin{quote}
+      \texttt{NBQ FRSMXZ YAWJU HWF ESKGQC WDQA NBQ TILO CWP}
+    \end{quote}
+    Note that the three-letter word `NBQ' appears twice in this text. We know that the word `the' is the most common word in English, so it is very likely that `NBQ' means `THE'. This is consistent with the fact that `Q' (which means `E') appears 4 times out of 44 in ciphertext. So `N' means `T', `B' means `H', `Q' means `E'. Also, the separator is often the less commonly used letter, `X'. Now the code reads
+    \begin{quote}
+      \texttt{the FRSMXZ YAWJU HWx ESKGeC WDeA the TILO CWP}
+    \end{quote}
+    Consider the letter `W' in ciphertext, which appears 4 times. The second common letter in English is `T', which, however, is encoded as `N' here. The third common letter is `A'. If so, the word `WDeA' has the patter `a?e?', where $? \neq T, H, E, A$ and the two question marks mean different letters. The only commonly used words satisfying these conditions are `ages' or `aged', which does not make sense here. So, we try the fourth common letter, `O'. Then the word has pattern `o?e?', which might be 'over', `open', `oven' or `obey'. The third one, `oven', can be ruled out, for a noun never comes before `the'. Now the code reads
+    \begin{quote}
+      \texttt{the FRSMXZ YAoJU Hox ESKGeC oDeA the TILO CoP}
+    \end{quote}
+    The fourth one, `obey', can also be ruled out, for no word has the pattern `?yo??' (YyoJU) if `A' means `y'. Both words 'over', `open' are possible, however, the first one is more likely, for the only correspondence of `YAoJU' is `snowy' if `oDeA' is `open', while there are many choices for `YorJU' if `oDeA' is `over'. Now the code reads
+    \begin{quote}
+      \texttt{the FRSMXZ YroJU Hox ESKGeC over the TILO CoP}
+    \end{quote}
+    The remaining part is easy, and the plaintext is
+    \begin{quote}
+      \texttt{the quick brown fox jumped over the lazy dog}
+    \end{quote}
 
   \section{[TJ] Problem 7.7}
   \begin{enumerate}[(a)]
@@ -60,8 +94,8 @@
 
   \section{[TJ] Problem 7.12}
   Note that the equation $X^E - X \equiv 0 \pmod n$ is equivalent to the equation system
-$$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1)\\ X^E - X \equiv 0 \pmod q \qquad (2) \end{cases} $$
-  because $n = pq$ where $p$ and $q$ are distinct primes. Every pair of solutions of equation (1) and (2) corresponds to a solution to the original equation, by the Chinese remainder theorem. So, the number of solutions to the original equation is the product of the numbers of solutions to equation (1) and (2). \par
+$$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1) \\ X^E - X \equiv 0 \pmod q \qquad (2) \end{cases} $$
+  because $n = pq$ where $p$ and $q$ are distinct primes. Also, every pair of solutions to equation (1) and (2) corresponds to a solution to the original equation, by the Chinese remainder theorem. So, the number of solutions to the original equation is the product of the numbers of solutions to equation (1) and (2). \par
   Without loss of generality, let's consider equation (1). Since $p$ is a prime, it is either the case that $X = 0$ or $X^{E-1} \equiv 1 \pmod p$. Let $X = g_p^t \neq 0$ where $g$ is a primitive root modulo $p$. By discrete logarithm theorem, the second case is equivalent to
   $$t(E-1) \equiv 0 \pmod{p-1}.$$
   this equation has exactly $\gcd(E-1, p-1)$ solutions. Hence, the equation (1) has $1 + \gcd(E-1, p-1)$ solutions, and they are $0$ and $g_p^{\frac{k(p-1)}{\gcd(E-1, p-1)}}$, where $k$ is an integer. Likewise the equation (2) has $1 + \gcd(E-1, q-1)$ solutions, and they are $0$ and $g_q^{\frac{k(q-1)}{\gcd(E-1, q-1)}}$. Let $X_1$, $X_2$ denote one pair of solutions to equations (1) and (2), then $X = X_1 q q^{-1}_p + X_2 p p^{-1}_q$ is a solution to the original equation, by the Chinese remainder theorem. There are $(1 + \gcd(E-1, p-1))(1 + \gcd(E-1, q-1))$ such solutions in all. \par
@@ -70,7 +104,7 @@ $$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1)\\ X^E - X \equiv 0 \pmod q 
   \section{[TC] Problem 31.7-1}
   $$ d = e^{-1} \bmod (p-1)(q-1) = 3^{-1} \bmod 280 = 187 $$
   $$ N = M^{3} \bmod n = 100^3 \bmod 319 = 254 $$
-  
+
   \section{[TC] Problem 31.7-2}
   Since $ed \equiv 1 \pmod{(p-1)(q-1)}$, we have $ed = k(p-1)(q-1) - 1$. Since $e = 3$ and $0 < d < \phi(n)$, we have $k = 1$ or $k = 2$. For $k = 1$, let $m = n + 1 - (1+ed)/k = p + q$, which can be calculated in polynomial time. Now, we have $m = p + q$, $n = pq$, and we want to solve for $p$ and $q$. We can rewrite these equations as
   $$f(p) = p^2 - mp - n = 0$$
@@ -99,9 +133,9 @@ $$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1)\\ X^E - X \equiv 0 \pmod q 
       So it can be done in at most $c(\mu(a, b) - \mu(b, a \bmod b))$ bit operations.
     \item The \proc{Euclid} requires at most
       $$ c \mu(a, b) - c \mu (b, a \bmod b) + c \mu(b, a \bmod b) - c \mu(a \bmod b, b \bmod (a \bmod b)) + \cdots < c\mu(a, b) = O(\mu (a, b)) $$
-      bit operations. Since $O(\mu(a, b)) = O(\lg a, \lg b)$ for $a, b > 1$, it requires $O(\beta^2)$ bit operations when applied to two $\beta$-bits inputs。    
+      bit operations. Since $O(\mu(a, b)) = O(\lg a, \lg b)$ for $a, b > 1$, it requires $O(\beta^2)$ bit operations when applied to two $\beta$-bits inputs。
   \end{enumerate}
-  
+
   \section{[TC] Problem 31.3}
   \begin{enumerate}
     \item The running time satisfies the following recurrence
@@ -122,8 +156,8 @@ $$ \begin{cases} X^E - X \equiv 0 \pmod p \qquad (1)\\ X^E - X \equiv 0 \pmod q 
     \item For the first method, the recurrence should be changed to
     $$ f_1(n) = f_1(n-1) + f_1(n-2) + O(\log F_n) = f_1(n-1) + f_1(n-2) + O(n) $$
     and we can still verify easily that $f_1(n) = O(3^n)$, so the running time of the first method is still exponential in $n$. \par
-    For the second method, the running time is 
-    $$ f_2(n) = O(\sum_{i = 1}^{n} \log(F_i)) = O(\sum_{i = 1}^n i) = O(n^2) $$ 
+    For the second method, the running time is
+    $$ f_2(n) = O(\sum_{i = 1}^{n} \log(F_i)) = O(\sum_{i = 1}^n i) = O(n^2) $$
     For the third method, the running time is
     $$ f_3(n) = O(\sum_{i = 1}^{\log_2 n} \log^2(F_{2^i})) = O(\sum_{i = 1}^{\log_2 n} 4^i) = O(n^2) $$
   \end{enumerate}
