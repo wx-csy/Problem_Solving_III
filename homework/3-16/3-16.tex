@@ -1,0 +1,222 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+\usepackage{fontspec, xunicode, xltxtra}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+%\usepackage{times}
+%\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{eucal}
+\usepackage{xypic}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\setlength{\columnsep}{7mm}
+
+\newcommand{\homeworkno}{3.16}
+\pagestyle{fancy}
+\lhead{Problem Solving: Homework \homeworkno}
+\chead{}
+\rhead{Chen Shaoyuan (161240004)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\setmonofont{Consolas}
+\setmainfont{Times New Roman}
+
+\allowdisplaybreaks[4]
+\begin{document}
+  \title{Problem Solving: Homework \homeworkno}
+  \author{Name: Chen Shaoyuan \and Student ID: 161240004}
+  \maketitle
+
+  \section{[TJ] Problem 12.2}
+  $O(n)$ is a subset of $GL_n(\mathbb{R})$. Hence, $O(n)$ is a group only if it is a subgroup of $GL_n(\mathbb{R})$. For every two orthogonal matrices $M, N$, we have $(MN)^{-1} = N^{-1}M^{-1} = N^t M^t = (MN)^t$ and $(M^{-1})^{-1} = M = (M^{-1})^t$, so $MN$ and $M^{-1}$ are also orthogonal matrices. Therefore, $O(n)$ is a subgroup of $GL_n(\mathbb{R})$, and thus $O(n)$ is a group.
+
+  \section{[TJ] Problem 12.3}
+  \begin{enumerate}[(a)]
+    \item
+    \begin{gather*}
+      \begin{pmatrix}
+        1/\sqrt{2} & -1/\sqrt{2} \\
+        1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix}
+      \begin{pmatrix}
+        1/\sqrt{2} & 1/\sqrt{2} \\
+        -1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix} \\
+    =  \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
+    \end{gather*}
+    \item
+    \begin{gather*}
+      \begin{pmatrix}
+        1/\sqrt{5} & -2/\sqrt{5} \\
+        2/\sqrt{5} & 1/\sqrt{5}
+      \end{pmatrix}
+      \begin{pmatrix}
+        1/\sqrt{5} & 2/\sqrt{5} \\
+        -2/\sqrt{5} & 1/\sqrt{5}
+      \end{pmatrix} \\
+    =  \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
+    \end{gather*}
+    \item
+    \begin{gather*}
+      \begin{pmatrix}
+        4/\sqrt{5} & 0 & 3/\sqrt{5} \\
+        -3/\sqrt{5} & 0 & 4/\sqrt{5} \\
+        0 & -1 & 0
+      \end{pmatrix}
+      \begin{pmatrix}
+        4/\sqrt{5} & -3/\sqrt{5} & 0 \\
+        0 & 0 & -1 \\
+        3/\sqrt{5} & 4/\sqrt{5} & 0
+      \end{pmatrix} \\
+    =  \begin{pmatrix} 5 & 0 & 0 \\ 0 & 5 & 0 \\ 0 & 0 & 1 \end{pmatrix} \neq I
+    \end{gather*}
+    \item
+    \begin{gather*}
+      \begin{pmatrix}
+        1/3 & 2/3 & -2/3 \\
+        -2/3 & 2/3 & 1/3 \\
+        -2/3 & 1/3 & 2/3
+      \end{pmatrix}
+      \begin{pmatrix}
+        1/3 & -2/3 & -2/3 \\
+        2/3 & 2/3 & 1/3 \\
+        -2/3 & 1/3 & 2/3
+      \end{pmatrix} \\
+    =  \begin{pmatrix} 1 & 0 & -4/9 \\ 0 & 1 & 8/9 \\ -4/9 & 8/9 & 1\end{pmatrix} \neq I
+    \end{gather*}
+  \end{enumerate}
+  So the first two matrices are orthogonal. Both of their determinants are 1, so they are in $SO(n)$.
+
+  \section{[TJ] Problem 12.6}
+  For every two elements of $E(n)$, say $(A, \bm{x})$ and $(B, \bm{y})$, their product $(A, \bm{x})(B, \bm{y}) = (AB, A\bm{y}+\bm{x})$ is still an element of $E(n)$. Also, we have
+  \begin{description}
+    \item [Identity] $$(I, \bm{0})(A, \bm{x}) = (A, \bm{x})(I, \bm{0}) = (A, \bm{x})$$
+    \item [Invertibility] $$(A, \bm{x})(A^{-1}, -A^{-1}\bm{x}) = (A^{-1}, -A^{-1}\bm{x})(A, \bm{x}) = (I, \bm{0})$$
+    \item [Associativity]
+    \begin{align*}
+        & ((A, \bm{x})(B, \bm{y}))(C, \bm{z}) \\
+      = & (AB, A\bm{y}+\bm{x})(C, \bm{z}) \\
+      = & (ABC, AB\bm{z}+A\bm{y}+\bm{x}) \\
+        & (A, \bm{x})((B, \bm{y})(C, \bm{z})) \\
+      = & (A, \bm{x})(BC, B\bm{z} + \bm{y}) \\
+      = & (ABC, AB\bm{z}+A\bm{y}+\bm{z})
+    \end{align*}
+    $$ \therefore ((A, \bm{x})(B, \bm{y}))(C, \bm{z}) = (A, \bm{x})((B, \bm{y})(C, \bm{z}))$$
+  \end{description}
+  So $E(n)$ is indeed a group.
+
+  \section{[TJ] Problem 12.11}
+  For $x, y \in \mathbb{R}^n$, if $f(x) = f(y)$, then $\|f(x) - f(y)\| = 0$, hence $\|x - y\| = 0$, i.e. $x = y$, so $f$ is one-to-one.
+
+  \section{[TJ] Problem 14.2}
+  \begin{enumerate}[(a)]
+    \item $X_{(1)} = X$, $X_{(12)} = \{3\}$, $X_{(13)} = \{2\}$, $X_{(23)} = \{1\}$, $X_{(123)} = X_{(132)} = \varnothing$; \par
+        $G_1 = \{(1), (23)\}$, $G_2 = \{(1), (13)\}$, $G_3 = \{(1), (12)\}$.
+    \item $X_{(1)} = X$, $X_{(12)} = \{3, 4, 5, 6\}$, $X_{(345)} = X_{(354)}= \{1, 2, 6\}$, $X_{(12)(345)} = X_{(12)(354)} = \{6\}$; \par
+        $G_1 = G_2 = \{(1), (345), (354)\}$, $G_3 = G_4 = G_5 = \{(1), (12)\}, G_6 = G$.
+  \end{enumerate}
+
+  \section{[TJ] Problem 14.3}
+  \begin{enumerate}[(a)]
+    \item The $G$-equivalence class of $X$ is $\{1, 2, 3\}$. \par
+    For every $x \in X$, $\mathcal{O}_x = X$, $|\mathcal{O}_x| = 3$, and $|G_x| = 2$, so $|\mathcal{O}_x|\cdot|G_x|=6=|G|$.
+    \item The $G$-equivalence classes of $X$ are $\{1, 2\}$, $\{3, 4, 5\}$ and $\{6\}$.
+        \begin{gather*}
+          |\mathcal{O}_1| \cdot |G_1| = 2 \cdot 3 = 6 \\
+          |\mathcal{O}_2| \cdot |G_2| = 2 \cdot 3 = 6 \\
+          |\mathcal{O}_3| \cdot |G_3| = 3 \cdot 2 = 6 \\
+          |\mathcal{O}_4| \cdot |G_4| = 3 \cdot 2 = 6 \\
+          |\mathcal{O}_5| \cdot |G_5| = 3 \cdot 2 = 6 \\
+          |\mathcal{O}_6| \cdot |G_6| = 1 \cdot 6 = 6
+        \end{gather*}
+  \end{enumerate}
+
+  \section{[TJ] Problem 14.4}
+  \begin{enumerate}[(a)]
+    \item Obviously, rotating every point on the real plane $\mathbb{R}^2$ counterclockwise about the origin through 0 radians yields the identical point. Also, rotating any point counterclockwise about the origin through $x$ radians, then through $y$ radians, yields the same point as rotating through $x+y$ radians. So $\mathbb{R}^2$ is a $G$-set.
+    \item The orbit containing $P$ is the circle centered at the origin with radius $|OP|$.
+    \item $G_P = \{0\}$ if $P$ is not the origin; otherwise, $G_P = G$.
+  \end{enumerate}
+
+  \section{[TJ] Problem 14.8}
+  Let 1, 2, 3, 4 denote the corners of the square in counterclockwise order. Then the symmetry group of the square is $G = \{(1), (1234), (13)(24), (1432)\}$. By P\'{o}lya enumeration theorem, the number of different ways to color the corners is
+ $$ (3^4 + 3^1 + 3^2 + 3^1) / 4 = 24.$$
+
+  \section{[TJ] Problem 14.11}
+  The surfaces are numbered as the following net.
+  {\linespread{1.0}
+  \begin{verbatim}
+         ┏━━━┓
+         ┃ 1 ┃
+     ┏━━━╋━━━╋━━━┳━━━┓
+     ┃ 2 ┃ 3 ┃ 4 ┃ 5 ┃
+     ┗━━━╋━━━╋━━━┻━━━┛
+         ┃ 6 ┃
+         ┗━━━┛
+  \end{verbatim}}
+  The symmetry operations of the cube can be classified into 6 types. The representatives and numbers of operations of these types are: $(1) \times 1$, $(2345) \times 6$, $(24)(35) \times 3$, $(134)(265) \times 8$, $(12)(46)(35) \times 6$. By P\'{o}lya enumeration theorem, the number of different ways to color the faces is
+  $$ (3^6 + 6 \times 3^3 + 3 \times 3^4 + 8 \times 3^2 + 6 \times 3^3) /24 = 57.$$
+
+  \section{[TJ] Problem 14.12}
+  The edges are numbered as the following diagram.
+  $$
+  \xymatrix@!0{
+  &  \ar@{-}[rr]^a \ar@{-}'[d][dd]_e
+      &  &  \ar@{-}[dd]^f        \\
+   \ar@{-}[ur]^d\ar@{-}[rr]^>>>>>c\ar@{-}[dd]_h
+      &  &  \ar@{-}[ur]_<<<<b\ar@{-}[dd]_<<<<g \\
+  &  \ar@{-}'[r]_<<<<i[rr]
+      &  &                 \\
+   \ar@{-}[rr]_k\ar@{-}[ur]^l
+      &  &  \ar@{-}[ur]_j        }
+  $$
+
+  The symmetry operations can be classified into 6 types. The representatives and numbers of operations of these types are: $\text{identity} \times 1$, $(abcd)(efgh)(ijkl) \times 6$, $(ac)(bd)(eg)(fh)(lj)(ik) \times 3$, $(cbg)(dfk)(ajh)(eil) \times 8$, $(dg)(bh)(ej)(fl)(ak) \times 6$. By P\'{o}lya enumeration theorem, the number of different ways to color the faces is
+  $$ (2^12 + 6 \times 2^3 + 3 \times 2^6 + 8 \times 2^4 + 6 \times 2^5) / 24 = 194.$$
+
+  \section{[TJ] Problem 14.16}
+  \begin{enumerate}[(a)]
+    \item Let 1, 2, 3, 4, 5, 6 denote the hydrogen atoms in clockwise order. The symmetry group of benzene is
+        \begin{multline*}
+          \{(0), (123456), (135)(246), (14)(25)(36), \\
+          (153)(264), (165432), (26)(35), (12)(36)(45), \\
+          (13)(46), (14)(23)(56), (15)(24), (16)(25)(34)\}.
+        \end{multline*}
+        By P\'{o}lya enumeration theorem, the number of compounds that formed by replacing zero or more of the hydrogen atoms is
+        $$ (2^6 + 2^1 + 2^2 + 2^3 + 2^2 + 2^1 + 3 \times 2^4 + 3 \times 2^3) / 12 = 13 $$
+        Excluding benzene itself, there are 12 different compounds.
+    \item There are 3. The three compounds are 1,2,3-trimethylbenzene, 1,2,4-trimethylbenzene and 1,3,5-trimethylbenzene.
+  \end{enumerate}
+
+  \section{[TJ] Problem 14.17}
+  Let $0, 1, 2, \cdots, 7$ denote the input combinations $(0,0,0)$, $(0,0,1)$, $(0,1,0)$, $\cdots$, $(1,1,1)$, respectively. Then the symmetry group of the input combinations is
+  \begin{multline*}
+   G = \{(0), (24)(35), (14)(36), (12)(56), \\
+    (142)(356), (241)(653)\}.
+  \end{multline*}
+  By P\'{o}lya's enumeration theorem, the number of equivalence classes is
+  $$ (2^8 + 3\times 2^6 + 2\times 2^4)/6 = 80. $$
+  When there are four input variables and they can be permuted by any permutation in $S_4$, the permutations of input combinations can be classified as
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{cc}
+      \hline
+      representative & number \\ \hline
+      (0) & 1 \\
+      (48)(59)(6a)(7b) & 6  \\
+      (12)(48)(5a)(69)(7b)(de) & 3 \\
+      (842)(6ac)(953)(7bd) & 8 \\
+      (8421)(39c6)(4a)(7bde) & 6 \\
+      \hline
+    \end{tabular}
+  \end{table}
+  By P\'{o}lya's enumeration theorem, the number of equivalence classes is
+  $$ (2^{16} + 6\times 2^{12} + 3\times 2^{10} + 8\times 2^8 + 6 \times 2^6)/24 = 3984. $$
+  
+  \section{[TJ] Problem 14.19}
+  Since the bands of a necktie have no symmetry, there are $4^12$ different-colored neckties.
+\end{document}
